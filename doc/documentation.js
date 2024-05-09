@@ -3,11 +3,15 @@ const swaggerDocumentation = {
   info: {
     version: "1.0.0",
     title: "Admin API",
-    description: "API documentation for HUZA admin",
+    description: "API documentation for HUZA   APP",
     license: {
       name: "MIT",
       url: "https://opensource.org/license/mit"
-    }
+    },
+    // renderUrl:{
+    // name:"render",
+    // url:"https://huza-backend-app-api.onrender.com"
+    // }
   },
   basePath: "/api",
   tags: [
