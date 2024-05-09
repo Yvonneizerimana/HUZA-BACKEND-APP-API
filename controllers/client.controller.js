@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { sendEmail } from "../utils/sendEmail.js";
 import { otpGenerator } from "../utils/otp.js";
 import { validationResult } from "express-validator";
-import { BadRequestError } from "/Users/USER/Desktop/bsa/errors/BadRequest.js";
+import { BadRequestError } from "/Users/USER/Desktop/bsa/errors/BadRequestError.js";
 
 import dotenv from "dotenv";
 
