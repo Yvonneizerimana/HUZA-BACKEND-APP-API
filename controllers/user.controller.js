@@ -1,4 +1,4 @@
-import userModel from '../models/admin.model.js'
+import userModel from '../models/user.model.js'
 import sgMail from '@sendgrid/mail'
 import { BadRequestError } from '../errors/index.js'
 // import NotFoundError from '../errors/index.js'
