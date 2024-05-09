@@ -11,10 +11,18 @@ const adminValidation = [
 const otpValidation = [
     body("otp", "Otp must be provided").not().isEmpty(),
 ];
+const skilledValidation = [
+    body('firstName', 'First name is required').not().isEmpty(),
+    body('lastName', 'Last name is required and must be in uppercase').not().isEmpty(),
+    body('email', 'Email is required').isEmail(),
+
+]
+
 
 export default{
     adminValidation,
-    otpValidation
+    otpValidation,
+    skilledValidation
 
 
 
