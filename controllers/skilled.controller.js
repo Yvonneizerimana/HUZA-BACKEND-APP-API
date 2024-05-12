@@ -1,4 +1,4 @@
-import skilledModel from "../models/client.model.js";
+import skilledModel from "../models/skilled.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../utils/sendEmail.js";
@@ -190,6 +190,11 @@ const skilledController = {
       res.status(500).json({ message: error.message });
     }
   },
+  logout: (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json("Logout Success");
+  },
+
   ForgotPassword: async (req, res, next) => {
     // Find user
     const foundUser = await skilledModel.findOne({ email: req.body.email });

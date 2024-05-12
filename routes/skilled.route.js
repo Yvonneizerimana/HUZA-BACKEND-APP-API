@@ -1,4 +1,4 @@
-import skilledController from "../controllers/client.controller.js";
+import skilledController from "../controllers/skilled.controller.js";
 import { Router } from "express";
 const route = Router()
 
