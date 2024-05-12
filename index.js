@@ -6,7 +6,7 @@ import adminRouter from './routes/index.js';
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js"
-import route from "./routes/client.route.js";
+import route from "./routes/skilled.route.js";
 
 const app = express()
 const port = process.env.PORT 
