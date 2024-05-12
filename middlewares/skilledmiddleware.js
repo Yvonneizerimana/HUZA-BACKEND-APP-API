@@ -1,4 +1,4 @@
-import clientModel from "../model/client.model.js";
+import skilledModel from "../models/skilled.model.js";
 import jwt from "jsonwebtoken";
 
 const skilledMiddleware = async (req, res, next) => {
@@ -11,7 +11,7 @@ const skilledMiddleware = async (req, res, next) => {
       const emailPayload = payload.email;
 
       // Finding skilled in database
-      const skilled = await clientModel.findOne({ email: emailPayload });
+      const skilled = await skilledModel.findOne({ email: emailPayload });
 
       // if (!skilled) {
       //   return res.status(401).json({ message: "skilled not found" });
@@ -20,7 +20,7 @@ const skilledMiddleware = async (req, res, next) => {
       // skilled exists, check their role
       const role = skilled.role;
       
-      if (role === "user") {
+      if (role === "skilled") {
         next();
       } else {
         return res.status(401).json({ message: "Access denied" });
