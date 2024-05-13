@@ -8,7 +8,7 @@ import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js"
 import skilledroute from "./routes/index.js";
 import authJwt from "./helper.js/jwt.js";
-// import skilledroute from "./routes/skilled.route.js";
+import cors from "cors";
 
 const app = express()
 const port = process.env.PORT 
@@ -17,6 +17,7 @@ const db = process.env.MONGODB_URI
 
 //middleware
 app.use(express.json())
+app.use(cors)
 app.use(cookieParser())
 
 //routes
