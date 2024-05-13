@@ -71,7 +71,7 @@ const skilledController = {
 
       // Checking if the otp is expired or not.
       if (foundUser.otpExpires < new Date().getTime()) {
-        next(new UnauthorizedError("OTP expired"));
+        next(console.log("OTP expired"));
       }
 
       // Updating the user to verified
