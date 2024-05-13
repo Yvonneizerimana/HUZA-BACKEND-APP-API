@@ -12,10 +12,10 @@ dotenv.config();
 
 const skilledController = {
   signup: async (req, res, next) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return next(new BadRequestError(errors.array()[0].msg));
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(new BadRequestError(errors.array()[0].msg));
+    }
     try {
       // Check if user already exists
       const existingUser = await skilledModel.findOne({
@@ -27,6 +27,7 @@ const skilledController = {
 
       // Hash password
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const password = await bcrypt.hash(req.body.confirmpassword,10)
       //generate otp
       const otp = otpGenerator();
       const otpExpirationDate = new Date().getTime() + 60 * 1000 * 5;
@@ -38,6 +39,7 @@ const skilledController = {
         email: req.body.email,
         phone:req.body.phone,
         password: hashedPassword,
+        confirmpassword: password,
         role: req.body.role,
         otp: otp,
         otpExpirationDate: otpExpirationDate,
@@ -49,6 +51,7 @@ const skilledController = {
         user: newUser,
       });
     } catch (err) {
+      
       res.status(500).json({ message: err.message });
     }
   },

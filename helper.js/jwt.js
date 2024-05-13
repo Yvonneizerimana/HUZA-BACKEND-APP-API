@@ -23,6 +23,13 @@ const authjwt = () => {
       "/api/admin/forgotPassword",
       "/api/admin//resetPassword/:resetToken",
       "/api/admin/logout",
+      "/api/user/create",
+      "/api/user/login",
+      "/api/user/verify",
+      "/api/user/forgotPassword",
+      "/api/user//resetPassword/:resetToken"
+     
+
      
     ],
   });

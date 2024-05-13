@@ -28,6 +28,12 @@ const adminSchema = new Schema({
         type: 'string',
         required: true
     },
+    confirmpassword:{
+        type:String,
+        required: true
+
+    },
+
     otp:{
         type:Number,
         required:true
