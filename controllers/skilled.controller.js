@@ -66,7 +66,7 @@ const skilledController = {
       // Checking if the given opt is stored in our database
       const foundUser = await skilledModel.findOne({ otp: req.body.otp });
       if (!foundUser) {
-        next(new UnauthorizedError("Authorization denied"));
+        next(console.log("user not found"));
       }
 
       // Checking if the otp is expired or not.
