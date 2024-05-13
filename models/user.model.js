@@ -22,12 +22,18 @@ const userSchema = new Schema({
     },
     role:{
         type: 'string',
-        default: 'admin',
+        default: 'user',
     },
     password:{
         type: 'string',
         required: true
     },
+    confirmpassword:{
+        type:String,
+        required: true
+
+    },
+
     otp:{
         type:Number,
         required:true

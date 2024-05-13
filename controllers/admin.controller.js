@@ -36,13 +36,15 @@ const admin={
 
                 
                 const hashedPassword=await bcrypt.hash(req.body.password,10)
+                const password = await bcrypt.hash(req.body.confirmpassword,10)
                 const addAdmin = new adminModel({
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
                     phoneNumber:req.body.phoneNumber,
-                    role:req.body.role,
+             
                     password:hashedPassword,
+                    confirmpassword:password,
                     otp: otp,
                     otpExpires: req.body.otpExpires,
                     
