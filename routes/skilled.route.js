@@ -1,12 +1,12 @@
 import skilledController from "../controllers/skilled.controller.js";
 import { Router } from "express";
-const route = Router()
+const skilledroute = Router()
 
 
 
-route.post("/createSkilled",skilledController.signup)
-route.post("/loginSkilled",skilledController.login)
-route.post("/verify",skilledController.ValidateOpt)
-route.post("/forgotPassword",skilledController.ForgotPassword)
-route.post("/resetPassword",skilledController.ResetPassword)
-export default route
+skilledroute.post("/createSkilled",skilledController.signup)
+skilledroute.post("/loginSkilled",skilledController.login)
+skilledroute.post("/verify",skilledController.ValidateOpt)
+skilledroute.post("/forgotPassword",skilledController.ForgotPassword)
+skilledroute.post("/resetPassword",skilledController.ResetPassword)
+export default skilledroute

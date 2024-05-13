@@ -127,7 +127,7 @@ loginUser: async (req, res, next) => {
     res.status(401).json({message: "Invalid password" });
    }
     if (user&&validation){
-      const accessToken = jwt.sign({
+      const token = jwt.sign({
         email: user.email,
         id: user._id
       },process.env.TOKEN_SECRETE, {expiresIn: "24h"});
@@ -136,7 +136,12 @@ loginUser: async (req, res, next) => {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true
       };
-      res.status(200).cookie("token", accessToken, options).json({message:"Your welcome to the platform",user: user.firstName + user.lastName });
+      // res.status(200).cookie("token", accessToken, options).json({message:"Your welcome to the platform",user: user.firstName + user.lastName });
+      res.cookie("token", token, options).status(200).json({
+        success: true,
+        token: token,
+        user: user,
+      });
     }
   } catch (err) {
     console.error(err.message);
