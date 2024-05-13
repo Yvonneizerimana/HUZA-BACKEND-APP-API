@@ -26,7 +26,7 @@ const skilledController = {
       }
 
       // Hash password
-    //   const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
       //generate otp
       const otp = otpGenerator();
       const otpExpirationDate = new Date().getTime() + 60 * 1000 * 5;

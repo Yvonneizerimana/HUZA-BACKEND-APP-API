@@ -6,7 +6,9 @@ import adminRouter from './routes/index.js';
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js"
-import route from "./routes/skilled.route.js";
+import skilledroute from "./routes/index.js";
+import authJwt from "./helper.js/jwt.js";
+// import skilledroute from "./routes/skilled.route.js";
 
 const app = express()
 const port = process.env.PORT 
@@ -18,10 +20,13 @@ app.use(express.json())
 app.use(cookieParser())
 
 //routes
-app.use('/api', adminRouter);
 app.use('/api-doc', swaggerUi.serve);
 app.use('/api-doc', swaggerUi.setup(documentation));
-app.use("/api/v1",route)
+app.use(authJwt())
+app.use('/api', adminRouter);
+app.use('/api',skilledroute);
+
+// app.use("/api/v1",route)
 
 //connect database
 

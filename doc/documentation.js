@@ -2,33 +2,35 @@ const swaggerDocumentation = {
   swagger: "2.0",
   info: {
     version: "1.0.0",
-    title: "Admin API",
-    description: "API documentation for HUZA   APP",
+    title: "API Documentation for HUZA APP",
+    description: "Comprehensive API documentation for HUZA APP",
+
     license: {
       name: "MIT",
-      url: "https://opensource.org/license/mit"
-    },
-    // renderUrl:{
-    // name:"render",
-    // url:"https://huza-backend-app-api.onrender.com"
-    // }
+      url: "https://opensource.org/licenses/mit"
+    }
+  },
+  securityDefinitions: {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+
+      "in": "header",
+      "description": "Enter your JWT token in the format 'Bearer {token}'"
+    }
   },
   basePath: "/api",
   tags: [
-    {
-      name: "Admin",
-      description: "HUZA admin API"
-    },
-    {
-      name: "User",
-      description: "USER admin API"
-    }
+    { name: "Admin", description: "HUZA admin API" },
+    { name: "User", description: "USER admin API" },
+    { name: "Skilled", description: "Skilled people API" }
   ],
   paths: {
     "/admin/create": {
       post: {
         summary: "Create a new admin",
         tags: ["Admin"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -52,12 +54,14 @@ const swaggerDocumentation = {
       post: {
         summary: "Verify admin via OTP",
         tags: ["Admin"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
             in: "body",
             name: "body",
             description: "Admin verification data",
+          
             required: true,
             schema: {
               $ref: "#/definitions/schemas/admin/AdminVerifyRequest"
@@ -75,6 +79,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Admin login",
         tags: ["Admin"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -98,6 +103,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Request to reset admin password",
         tags: ["Admin"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -121,6 +127,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Reset admin password",
         tags: ["Admin"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -151,6 +158,7 @@ const swaggerDocumentation = {
       get: {
         summary: "Logout admin",
         tags: ["Admin"],
+        security: [{ "BearerAuth": [] }],
         responses: {
           200: {
             description: "Admin logged out successfully"
@@ -162,6 +170,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Create a new user",
         tags: ["User"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -185,6 +194,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Verify user via OTP",
         tags: ["User"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -208,6 +218,7 @@ const swaggerDocumentation = {
       post: {
         summary: "User login",
         tags: ["User"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -231,6 +242,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Request to reset user password",
         tags: ["User"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -254,6 +266,7 @@ const swaggerDocumentation = {
       post: {
         summary: "Reset user password",
         tags: ["User"],
+        security: [{ "BearerAuth": [] }],
         consumes: ["application/json"],
         parameters: [
           {
@@ -284,9 +297,130 @@ const swaggerDocumentation = {
       get: {
         summary: "Logout user",
         tags: ["User"],
+        security: [{ "BearerAuth": [] }],
         responses: {
           200: {
             description: "User logged out successfully"
+          }
+        }
+      }
+    },
+    "/skilled/createSkilled": {
+      post: {
+        summary: "Create a new skilled person",
+        tags: ["Skilled"],
+        security: [{ "BearerAuth": [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "Skilled person data to create",
+            required: true,
+            schema: {
+              $ref: "#/definitions/schemas/skilled/SkilledCreateRequest"
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: "New skilled person created successfully"
+          }
+        }
+      }
+    },
+    "/skilled/loginSkilled": {
+      post: {
+        summary: "Skilled person login",
+        tags: ["Skilled"],
+        security: [{ "BearerAuth": [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "Skilled person login credentials",
+            required: true,
+            schema: {
+              $ref: "#/definitions/schemas/skilled/SkilledLoginRequest"
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: "Skilled person logged in successfully"
+          }
+        }
+      }
+    },
+    "/skilled/verify": {
+      post: {
+        summary: "Verify skilled person via OTP",
+        tags: ["Skilled"],
+        security: [{ "BearerAuth": [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "Skilled person verification data",
+            required: true,
+            schema: {
+              $ref: "#/definitions/schemas/skilled/SkilledVerifyRequest"
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: "Skilled person verified successfully"
+          }
+        }
+      }
+    },
+    "/skilled/forgotPassword": {
+      post: {
+        summary: "Request to reset skilled person password",
+        tags: ["Skilled"],
+        security: [{ "BearerAuth": [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "Skilled person email for password reset",
+            required: true,
+            schema: {
+              $ref: "#/definitions/schemas/skilled/SkilledForgotPasswordRequest"
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: "Password reset link sent successfully"
+          }
+        }
+      }
+    },
+    "/skilled/resetPassword": {
+      post: {
+        summary: "Reset skilled person password",
+        tags: ["Skilled"],
+        security: [{ "BearerAuth": [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "New password for skilled person",
+            required: true,
+            schema: {
+              $ref: "#/definitions/schemas/skilled/SkilledResetPasswordRequest"
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: "Password reset successful"
           }
         }
       }
@@ -368,6 +502,48 @@ const swaggerDocumentation = {
           properties: {
             password: { type: "string" }
           }
+        }
+      },
+      skilled: {
+        SkilledCreateRequest: {
+          type: "object",
+          properties: {
+            firstName: { type: "string" },
+            lastName: { type: "string" },
+            email: { type: "string" },
+            phone: { type: "string" },
+            password: { type: "string" }
+          },
+          required: ["firstName", "lastName", "email", "phone", "password"]
+        },
+        SkilledLoginRequest: {
+          type: "object",
+          properties: {
+            email: { type: "string" },
+            password: { type: "string" }
+          },
+          required: ["email", "password"]
+        },
+        SkilledVerifyRequest: {
+          type: "object",
+          properties: {
+            otp: { type: "number" }
+          },
+          required: ["otp"]
+        },
+        SkilledForgotPasswordRequest: {
+          type: "object",
+          properties: {
+            email: { type: "string" }
+          },
+          required: ["email"]
+        },
+        SkilledResetPasswordRequest: {
+          type: "object",
+          properties: {
+            password: { type: "string" }
+          },
+          required: ["password"]
         }
       }
     }

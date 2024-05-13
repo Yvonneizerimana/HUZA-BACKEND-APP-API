@@ -1,22 +1,30 @@
-import expressJwt from 'express-jwt';
-import dotenv from 'dotenv';
+import { expressjwt } from "express-jwt";
+import dotenv from "dotenv";
 dotenv.config();
 
-const authJwt = () => {
-  return expressJwt({
+const authjwt = () => {
+  return expressjwt({
     secret: process.env.SECRET,
-    algorithms: ['HS256'],
-    // Optional: Implement isRevoked to handle token revocation logic
-    isRevoked: (req, payload, done) => {
-      done(null, false); // or true to revoke the token
-    }
+    algorithms: ["HS256"],
+    // isRevoked: (req, payload, done)=>{
+    //     done(null, true)
+    // }
   }).unless({
     path: [
-      '/api-doc', // Add any public paths that do not require authentication
+      "/api-doc",
+      "/api/skilled/createSkilled",
+      "/api/skilled/loginSkilled",
+      "/api/skilled/verify",
+      "/api/skilled/forgotPassword",
+      "/api/skilled/resetPassword",
+      "/api/admin/create",
+      "/api/admin/login",
+      "/api/admin/verify",
+      "/api/admin/forgotPassword",
+      "/api/admin//resetPassword/:resetToken",
+      "/api/admin/logout",
+     
     ],
   });
 };
-
-export default authJwt;
-
-
+export default authjwt;
