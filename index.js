@@ -22,18 +22,7 @@ const port = process.env.PORT;
 const db = process.env.MONGODB_URI;
 
 //middleware
-<<<<<<< HEAD
-app.use(express.json());
-app.use(cookieParser());
 
-//routes
-app.use("/api-doc", swaggerUi.serve);
-app.use("/api-doc", swaggerUi.setup(documentation));
-// app.use(authJwt())
-app.use("/api", adminRouter);
-app.use("/api", skilledroute);
-app.use("/api", profileRoute);
-=======
 app.use(express.json())
 app.use(cors)
 app.use(cookieParser())
@@ -45,7 +34,7 @@ app.use('/api-doc', swaggerUi.setup(documentation));
 app.use('/api', adminRouter);
 app.use('/api',skilledroute);
 
->>>>>>> 6a05a8171a961f19fb856b956944c74cafafe941
+
 // app.use("/api/v1",route)
 
 //connect database
