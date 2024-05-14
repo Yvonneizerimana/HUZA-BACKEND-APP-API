@@ -7,34 +7,26 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js";
 import skilledroute from "./routes/index.js";
-<<<<<<< HEAD
 import profileRoute from "./routes/index.js";
-// import authJwt from "./helper.js/jwt.js";
+ import authJwt from "./helper.js/jwt.js";
 
 // import skilledroute from "./routes/skilled.route.js";
-=======
-// import authJwt from "./helper.js/jwt.js";
-import cors from "cors";
->>>>>>> 6a05a8171a961f19fb856b956944c74cafafe941
 
 const app = express();
 const port = process.env.PORT;
 const db = process.env.MONGODB_URI;
 
 //middleware
-
-app.use(express.json())
-app.use(cors)
-app.use(cookieParser())
+app.use(express.json());
+app.use(cookieParser());
 
 //routes
-app.use('/api-doc', swaggerUi.serve);
-app.use('/api-doc', swaggerUi.setup(documentation));
-// app.use(authJwt())
-app.use('/api', adminRouter);
-app.use('/api',skilledroute);
-
-
+app.use("/api-doc", swaggerUi.serve);
+app.use("/api-doc", swaggerUi.setup(documentation));
+ app.use(authJwt())
+app.use("/api", adminRouter);
+app.use("/api", skilledroute);
+app.use("/api", profileRoute);
 // app.use("/api/v1",route)
 
 //connect database

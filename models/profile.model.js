@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 
-const profileSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+
+const profileSchema = new Schema(
   {
     firstName: {
       type: String,
@@ -68,7 +70,7 @@ const profileSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    pathId: {
+    pathID: {
       type: String,
       required: false,
     },
@@ -80,5 +82,6 @@ const profileSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const profileModel = mongoose.model("Profile", profileSchema);
-export default profileModel;
+const Profile = mongoose.model("Profile", profileSchema);
+
+export default Profile;

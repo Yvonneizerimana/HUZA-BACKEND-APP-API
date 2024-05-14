@@ -14,6 +14,7 @@ const profileController = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
+    
       Address: req.body.Address,
       education: {
         school: req.body.education.school,
@@ -26,6 +27,7 @@ const profileController = {
         nationalID: req.files[1].filename,
         certificate: req.files[2].filename,
       },
+      
     });
     res.status(200).json({
       status: "success",
