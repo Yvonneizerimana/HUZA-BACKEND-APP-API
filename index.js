@@ -8,7 +8,7 @@ import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js";
 import skilledroute from "./routes/index.js";
 import profileRoute from "./routes/index.js";
- import authJwt from "./helper.js/jwt.js";
+//  import authJwt from "./helper.js/jwt.js";
 
 // import skilledroute from "./routes/skilled.route.js";
 
@@ -23,7 +23,7 @@ app.use(cookieParser());
 //routes
 app.use("/api-doc", swaggerUi.serve);
 app.use("/api-doc", swaggerUi.setup(documentation));
- app.use(authJwt())
+//  app.use(authJwt())
 app.use("/api", adminRouter);
 app.use("/api", skilledroute);
 app.use("/api", profileRoute);

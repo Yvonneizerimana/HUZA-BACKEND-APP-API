@@ -65,6 +65,10 @@ const profileSchema = new Schema(
         type: String,
         required: true,
       },
+      photo:{
+        type: String,
+        required: true,
+      }
     },
     pathResume: {
       type: String,
@@ -75,6 +79,10 @@ const profileSchema = new Schema(
       required: false,
     },
     pathCertificate: {
+      type: String,
+      required: false,
+    },
+    pathPhoto: {
       type: String,
       required: false,
     },
