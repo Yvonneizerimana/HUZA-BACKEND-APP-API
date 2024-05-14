@@ -7,15 +7,15 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js";
 import skilledroute from "./routes/index.js";
-<<<<<<< HEAD
+
 import profileRoute from "./routes/index.js";
 // import authJwt from "./helper.js/jwt.js";
 
 // import skilledroute from "./routes/skilled.route.js";
-=======
+
 // import authJwt from "./helper.js/jwt.js";
 import cors from "cors";
->>>>>>> 6a05a8171a961f19fb856b956944c74cafafe941
+
 
 const app = express();
 const port = process.env.PORT;
