@@ -41,7 +41,6 @@ const user = {
       lastName: req.body.lastName,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
-
       password: hashedPassword,
       confirmpassword: password,
       otp: otp,
