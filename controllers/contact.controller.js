@@ -4,9 +4,10 @@ import asyncWrapper from '../errors/Async.js';
 const contactController = {
     create: async (req, res) => {
        const newContact=await contactModel(req.body)
+       const savedContact=newContact.save()
         return res.status(201).json({
             message: "Contact created successfully",
-            newContact
+            savedContact
         });
     },
     listContact:asyncWrapper(async(req,res)=>{
