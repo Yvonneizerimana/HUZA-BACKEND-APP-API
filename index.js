@@ -8,17 +8,26 @@ import swaggerUi from "swagger-ui-express";
 import documentation from "./doc/documentation.js";
 import skilledroute from "./routes/index.js";
 import profileRoute from "./routes/index.js";
-//  import authJwt from "./helper.js/jwt.js";
+import cors from 'cors'
 
-// import skilledroute from "./routes/skilled.route.js";
+// Middleware
 
 const app = express();
 const port = process.env.PORT;
 const db = process.env.MONGODB_URI;
+//cors
+
+const corsOptions = {
+  origin: "https://neza-huza.netlify.app", 
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type, Authorization",
+  credentials: true,
+};
 
 //middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 //routes
 app.use("/api-doc", swaggerUi.serve);
