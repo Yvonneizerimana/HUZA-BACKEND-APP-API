@@ -18,7 +18,7 @@ const db = process.env.MONGODB_URI;
 //cors
 
 const corsOptions = {
-  origin: "https://neza-huza.netlify.app", 
+  origin: ["https://neza-huza.netlify.app",process.env.clientApp1,process.env.clientApp2], 
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type, Authorization",
   credentials: true,
