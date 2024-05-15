@@ -13,5 +13,10 @@ const storage = multer.diskStorage({
   })
  
   
-  const upload = multer({ storage: storage })
+  const upload = multer({ storage: storage }).fields([
+    { name: 'documents[resume]', maxCount: 1 },
+    { name: 'documents[nationalID]', maxCount: 1 },
+    { name: 'documents[certificate]', maxCount: 1 },
+    { name: 'documents[photo]', maxCount: 1 },
+  ]);
   export default upload;

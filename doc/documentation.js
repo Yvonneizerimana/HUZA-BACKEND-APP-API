@@ -432,22 +432,108 @@ const swaggerDocumentation = {
         parameters: [
           {
             in: "formData",
-            name: "documents",
-            type: "array",
-            items: {
-              type: "file",
-            },
-            description: "Upload documents",
+            name: "firstName",
+            type: "string",
+            description: "First name",
             required: true,
           },
           {
-            in: "body",
-            name: "body",
-            description: "Profile data to create",
+            in: "formData",
+            name: "lastName",
+            type: "string",
+            description: "Last name",
             required: true,
-            schema: {
-              $ref: "#/definitions/profile/ProfileCreateRequest",
-            },
+          },
+          {
+            in: "formData",
+            name: "email",
+            type: "string",
+            description: "Email",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "Address[country]",
+            type: "string",
+            description: "Country",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "Address[province]",
+            type: "string",
+            description: "Province",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "Address[district]",
+            type: "string",
+            description: "District",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "Address[sector]",
+            type: "string",
+            description: "Sector",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "education[school]",
+            type: "string",
+            description: "School",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "education[major]",
+            type: "string",
+            description: "Major",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "education[didyoufinished]",
+            type: "boolean",
+            description: "Did you finish?",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "education[timeofstudy]",
+            type: "string",
+            description: "Time of study",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "documents[resume]",
+            type: "file",
+            description: "Resume file",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "documents[nationalID]",
+            type: "file",
+            description: "National ID file",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "documents[certificate]",
+            type: "file",
+            description: "Certificate file",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "documents[photo]",
+            type: "file",
+            description: "Photo file",
+            required: true,
           },
         ],
         responses: {
@@ -459,16 +545,16 @@ const swaggerDocumentation = {
     },
     "/profile/delete/{id}": {
       delete: {
-        summary: "Delete a profile by ID",
+        summary: "Delete a profile",
         tags: ["Profile"],
         security: [{ BearerAuth: [] }],
         parameters: [
           {
             in: "path",
             name: "id",
-            description: "Profile ID",
-            required: true,
             type: "string",
+            required: true,
+            description: "ID of the profile to delete",
           },
         ],
         responses: {
@@ -480,26 +566,122 @@ const swaggerDocumentation = {
     },
     "/profile/update/{id}": {
       put: {
-        summary: "Update a profile by ID",
+        summary: "Update a profile",
         tags: ["Profile"],
         security: [{ BearerAuth: [] }],
-        consumes: ["application/json"],
+        consumes: ["multipart/form-data"],
         parameters: [
           {
             in: "path",
             name: "id",
-            description: "Profile ID",
-            required: true,
             type: "string",
+            required: true,
+            description: "ID of the profile to update",
           },
           {
-            in: "body",
-            name: "body",
-            description: "Profile data to update",
-            required: true,
-            schema: {
-              $ref: "#/definitions/profile/ProfileUpdateRequest",
-            },
+            in: "formData",
+            name: "firstName",
+            type: "string",
+            description: "First name",
+            
+          },
+          {
+            in: "formData",
+            name: "lastName",
+            type: "string",
+            description: "Last name",
+            
+          },
+          {
+            in: "formData",
+            name: "email",
+            type: "string",
+            description: "Email",
+            
+          },
+          {
+            in: "formData",
+            name: "Address[country]",
+            type: "string",
+            description: "Country",
+           
+          },
+          {
+            in: "formData",
+            name: "Address[province]",
+            type: "string",
+            description: "Province",
+           
+          },
+          {
+            in: "formData",
+            name: "Address[district]",
+            type: "string",
+            description: "District",
+            
+          },
+          {
+            in: "formData",
+            name: "Address[sector]",
+            type: "string",
+            description: "Sector",
+            
+          },
+          {
+            in: "formData",
+            name: "education[school]",
+            type: "string",
+            description: "School",
+           
+          },
+          {
+            in: "formData",
+            name: "education[major]",
+            type: "string",
+            description: "Major",
+            
+          },
+          {
+            in: "formData",
+            name: "education[didyoufinished]",
+            type: "boolean",
+            description: "Did you finish?",
+            
+          },
+          {
+            in: "formData",
+            name: "education[timeofstudy]",
+            type: "string",
+            description: "Time of study",
+           
+          },
+          {
+            in: "formData",
+            name: "documents[resume]",
+            type: "file",
+            description: "Resume file",
+            
+          },
+          {
+            in: "formData",
+            name: "documents[nationalID]",
+            type: "file",
+            description: "National ID file",
+            
+          },
+          {
+            in: "formData",
+            name: "documents[certificate]",
+            type: "file",
+            description: "Certificate file",
+            
+          },
+          {
+            in: "formData",
+            name: "documents[photo]",
+            type: "file",
+            description: "Photo file",
+            
           },
         ],
         responses: {
@@ -637,20 +819,43 @@ const swaggerDocumentation = {
           firstName: { type: "string" },
           lastName: { type: "string" },
           email: { type: "string" },
-          phoneNumber: { type: "string" },
+          Address: {
+            type: "object",
+            properties: {
+              country: { type: "string" },
+              province: { type: "string" },
+              district: { type: "string" },
+              sector: { type: "string" },
+            },
+          },
+          education: {
+            type: "object",
+            properties: {
+              school: { type: "string" },
+              major: { type: "string" },
+              didyoufinished: { type: "boolean" },
+              timeofstudy: { type: "string" },
+            },
+          },
+          documents: {
+            type: "object",
+            properties: {
+              resume: { type: "string" },
+              nationalID: { type: "string" },
+              certificate: { type: "string" },
+              photo: { type: "string" },
+            },
+          },
+          pathResume: { type: "string" },
+          pathID: { type: "string" },
+          pathCertificate: { type: "string" },
+          pathPhoto: { type: "string" },
         },
-      },
-      ProfileUpdateRequest: {
-        type: "object",
-        properties: {
-          firstName: { type: "string" },
-          lastName: { type: "string" },
-          email: { type: "string" },
-          phoneNumber: { type: "string" },
-        },
+        required: ["firstName", "lastName", "email", "Address", "education", "documents"],
       },
     },
-  },
+  }
+    
 };
 
 export default swaggerDocumentation;

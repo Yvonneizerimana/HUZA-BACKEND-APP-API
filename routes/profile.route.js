@@ -1,14 +1,10 @@
-import profileController from "../controllers/profile.controller.js";
-import upload from "../middlewares/fileupload.js";
-import { Router } from "express";
-const profileRoute = Router();
+import express from 'express';
+import profileController from '../controllers/profile.controller.js';
 
-profileRoute.post(
-  "/createProfile",
-  upload.array("documents"),
+const router = express.Router();
 
-  profileController.create
-);
-profileRoute.delete('/delete/:id',profileController.delete)
-profileRoute.put('/update/:id',profileController.updating)
-export default profileRoute;
+router.post('/createProfile', profileController.create);
+router.put('/update/:id', profileController.update);
+router.delete('/delete/:id', profileController.delete);
+
+export default router;
