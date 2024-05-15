@@ -186,6 +186,9 @@ const swaggerDocumentation = {
           200: {
             description: "New user created successfully",
           },
+          400:{
+            description: "User already exists"
+          }
         },
       },
     },
