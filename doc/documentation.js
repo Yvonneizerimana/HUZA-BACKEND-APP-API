@@ -19,10 +19,11 @@ const swaggerDocumentation = {
     },
   },
   tags: [
-    { name: "Admin", description: "HUZA admin API" },
-    { name: "User", description: "USER admin API" },
+    { name: "Admin", description: "Admin API" },
+    { name: "User", description: "USER API" },
     { name: "Skilled", description: "Skilled people API" },
     { name: "Profile", description: "Profile API" },
+    { name: "Contact", description: "Contact API" },
   ],
   paths: {
     "/admin/create": {
@@ -691,6 +692,105 @@ const swaggerDocumentation = {
         },
       },
     },
+    "/contact/createContact": {
+      post: {
+        summary: "Create a new contact",
+        tags: ["Contact"],
+        security: [{ BearerAuth: [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "Contact data to create",
+            required: true,
+            schema: {
+              $ref: "#/definitions/contact/ContactCreateRequest",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "New contact created successfully",
+          },
+        },
+      },
+    },
+    "/contact/listContact": {
+      get: {
+        summary: "List all contacts",
+        tags: ["Contact"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: {
+            description: "List of contacts retrieved successfully",
+          },
+        },
+      },
+    },
+    "/contact/listContactByEmail": {
+      get: {
+        summary: "List contacts by email",
+        tags: ["Contact"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            in: "query",
+            name: "email",
+            description: "Email to filter contacts",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Contacts retrieved successfully",
+          },
+        },
+      },
+    },
+    "/contact/listContactByPhone": {
+      get: {
+        summary: "List contacts by phone number",
+        tags: ["Contact"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            in: "query",
+            name: "phoneNumber",
+            description: "Phone number to filter contacts",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Contacts retrieved successfully",
+          },
+        },
+      },
+    },
+    "/contact/deleteContactById": {
+      delete: {
+        summary: "Delete contact by ID",
+        tags: ["Contact"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            in: "query",
+            name: "id",
+            description: "ID of the contact to delete",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Contact deleted successfully",
+          },
+        },
+      },
+    },
   },
   definitions: {
     admin: {
@@ -854,7 +954,21 @@ const swaggerDocumentation = {
         required: ["firstName", "lastName", "email", "Address", "education", "documents"],
       },
     },
-  }
+  
+  contact: { // Added contact definitions
+    ContactCreateRequest: {
+      type: "object",
+      properties: {
+        firstName: { type: "string", required: true },
+        lastName: { type: "string", required: true },
+        email: { type: "string", required: true, unique: true },
+        phoneNumber: { type: "string", required: true, unique: true },
+        message: { type: "string", required: true },
+      },
+      required: ["firstName", "lastName", "email", "phoneNumber", "message"],
+    },  
+  } 
+},
     
 };
 
