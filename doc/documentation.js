@@ -4,26 +4,25 @@ const swaggerDocumentation = {
     version: "1.0.0",
     title: "API Documentation for HUZA APP",
     description: "Comprehensive API documentation for HUZA APP",
-
     license: {
       name: "MIT",
       url: "https://opensource.org/licenses/mit",
     },
   },
+  basePath: "/api",
   securityDefinitions: {
     BearerAuth: {
       type: "apiKey",
       name: "Authorization",
-
       in: "header",
       description: "Enter your JWT token in the format 'Bearer {token}'",
     },
   },
-  basePath: "/api",
   tags: [
     { name: "Admin", description: "HUZA admin API" },
     { name: "User", description: "USER admin API" },
     { name: "Skilled", description: "Skilled people API" },
+    { name: "Profile", description: "Profile API" },
   ],
   paths: {
     "/admin/create": {
@@ -39,7 +38,7 @@ const swaggerDocumentation = {
             description: "Admin data to create",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/admin/AdminCreateRequest",
+              $ref: "#/definitions/admin/AdminCreateRequest",
             },
           },
         ],
@@ -61,10 +60,9 @@ const swaggerDocumentation = {
             in: "body",
             name: "body",
             description: "Admin verification data",
-
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/admin/AdminVerifyRequest",
+              $ref: "#/definitions/admin/AdminVerifyRequest",
             },
           },
         ],
@@ -88,7 +86,7 @@ const swaggerDocumentation = {
             description: "Admin login credentials",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/admin/AdminLoginRequest",
+              $ref: "#/definitions/admin/AdminLoginRequest",
             },
           },
         ],
@@ -112,7 +110,7 @@ const swaggerDocumentation = {
             description: "Admin email for password reset",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/admin/AdminForgotPasswordRequest",
+              $ref: "#/definitions/admin/AdminForgotPasswordRequest",
             },
           },
         ],
@@ -143,7 +141,7 @@ const swaggerDocumentation = {
             description: "New password for admin",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/admin/AdminResetPasswordRequest",
+              $ref: "#/definitions/admin/AdminResetPasswordRequest",
             },
           },
         ],
@@ -179,7 +177,7 @@ const swaggerDocumentation = {
             description: "User data to create",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/user/UserCreateRequest",
+              $ref: "#/definitions/user/UserCreateRequest",
             },
           },
         ],
@@ -203,7 +201,7 @@ const swaggerDocumentation = {
             description: "User verification data",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/user/UserVerifyRequest",
+              $ref: "#/definitions/user/UserVerifyRequest",
             },
           },
         ],
@@ -227,7 +225,7 @@ const swaggerDocumentation = {
             description: "User login credentials",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/user/UserLoginRequest",
+              $ref: "#/definitions/user/UserLoginRequest",
             },
           },
         ],
@@ -251,7 +249,7 @@ const swaggerDocumentation = {
             description: "User email for password reset",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/user/UserForgotPasswordRequest",
+              $ref: "#/definitions/user/UserForgotPasswordRequest",
             },
           },
         ],
@@ -282,7 +280,7 @@ const swaggerDocumentation = {
             description: "New password for user",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/user/UserResetPasswordRequest",
+              $ref: "#/definitions/user/UserResetPasswordRequest",
             },
           },
         ],
@@ -318,7 +316,7 @@ const swaggerDocumentation = {
             description: "Skilled person data to create",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/skilled/SkilledCreateRequest",
+              $ref: "#/definitions/skilled/SkilledCreateRequest",
             },
           },
         ],
@@ -342,7 +340,7 @@ const swaggerDocumentation = {
             description: "Skilled person login credentials",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/skilled/SkilledLoginRequest",
+              $ref: "#/definitions/skilled/SkilledLoginRequest",
             },
           },
         ],
@@ -366,7 +364,7 @@ const swaggerDocumentation = {
             description: "Skilled person verification data",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/skilled/SkilledVerifyRequest",
+              $ref: "#/definitions/skilled/SkilledVerifyRequest",
             },
           },
         ],
@@ -390,7 +388,7 @@ const swaggerDocumentation = {
             description: "Skilled person email for password reset",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/skilled/SkilledForgotPasswordRequest",
+              $ref: "#/definitions/skilled/SkilledForgotPasswordRequest",
             },
           },
         ],
@@ -414,7 +412,7 @@ const swaggerDocumentation = {
             description: "New password for skilled person",
             required: true,
             schema: {
-              $ref: "#/definitions/schemas/skilled/SkilledResetPasswordRequest",
+              $ref: "#/definitions/skilled/SkilledResetPasswordRequest",
             },
           },
         ],
@@ -425,128 +423,230 @@ const swaggerDocumentation = {
         },
       },
     },
+    "/profile/createProfile": {
+      post: {
+        summary: "Create a new profile",
+        tags: ["Profile"],
+        security: [{ BearerAuth: [] }],
+        consumes: ["multipart/form-data"],
+        parameters: [
+          {
+            in: "formData",
+            name: "documents",
+            type: "array",
+            items: {
+              type: "file",
+            },
+            description: "Upload documents",
+            required: true,
+          },
+          {
+            in: "body",
+            name: "body",
+            description: "Profile data to create",
+            required: true,
+            schema: {
+              $ref: "#/definitions/profile/ProfileCreateRequest",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "New profile created successfully",
+          },
+        },
+      },
+    },
+    "/profile/delete/{id}": {
+      delete: {
+        summary: "Delete a profile by ID",
+        tags: ["Profile"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            description: "Profile ID",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Profile deleted successfully",
+          },
+        },
+      },
+    },
+    "/profile/update/{id}": {
+      put: {
+        summary: "Update a profile by ID",
+        tags: ["Profile"],
+        security: [{ BearerAuth: [] }],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            description: "Profile ID",
+            required: true,
+            type: "string",
+          },
+          {
+            in: "body",
+            name: "body",
+            description: "Profile data to update",
+            required: true,
+            schema: {
+              $ref: "#/definitions/profile/ProfileUpdateRequest",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Profile updated successfully",
+          },
+        },
+      },
+    },
   },
   definitions: {
-    schemas: {
-      admin: {
-        AdminCreateRequest: {
-          type: "object",
-          properties: {
-            firstName: { type: "string" },
-            lastName: { type: "string" },
-            email: { type: "string" },
-            phoneNumber: { type: "string" },
-
-            password: { type: "string" },
-            confirmpassword: { type: "string" },
-          },
-        },
-        AdminVerifyRequest: {
-          type: "object",
-          properties: {
-            otp: { type: "number" },
-          },
-        },
-        AdminLoginRequest: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-            password: { type: "string" },
-          },
-        },
-        AdminForgotPasswordRequest: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-          },
-        },
-        AdminResetPasswordRequest: {
-          type: "object",
-          properties: {
-            password: { type: "string" },
-          },
+    admin: {
+      AdminCreateRequest: {
+        type: "object",
+        properties: {
+          firstName: { type: "string" },
+          lastName: { type: "string" },
+          email: { type: "string" },
+          phoneNumber: { type: "string" },
+          password: { type: "string" },
+          confirmpassword: { type: "string" },
         },
       },
-      user: {
-        UserCreateRequest: {
-          type: "object",
-          properties: {
-            firstName: { type: "string" },
-            lastName: { type: "string" },
-            email: { type: "string" },
-            phoneNumber: { type: "string" },
-
-            password: { type: "string" },
-            confirmpassword: { type: "string" },
-          },
-        },
-        UserVerifyRequest: {
-          type: "object",
-          properties: {
-            otp: { type: "number" },
-          },
-        },
-        UserLoginRequest: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-            password: { type: "string" },
-          },
-        },
-        UserForgotPasswordRequest: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-          },
-        },
-        UserResetPasswordRequest: {
-          type: "object",
-          properties: {
-            password: { type: "string" },
-          },
+      AdminVerifyRequest: {
+        type: "object",
+        properties: {
+          otp: { type: "number" },
         },
       },
-      skilled: {
-        SkilledCreateRequest: {
-          type: "object",
-          properties: {
-            firstName: { type: "string" },
-            lastName: { type: "string" },
-            email: { type: "string" },
-            phone: { type: "string" },
-            password: { type: "string" },
-            confirmpassword: { type: "string" },
-          },
-          required: ["firstName", "lastName", "email", "phone", "password"],
+      AdminLoginRequest: {
+        type: "object",
+        properties: {
+          email: { type: "string" },
+          password: { type: "string" },
         },
-        SkilledLoginRequest: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-            password: { type: "string" },
-          },
-          required: ["email", "password"],
+      },
+      AdminForgotPasswordRequest: {
+        type: "object",
+        properties: {
+          email: { type: "string" },
         },
-        SkilledVerifyRequest: {
-          type: "object",
-          properties: {
-            otp: { type: "number" },
-          },
-          required: ["otp"],
+      },
+      AdminResetPasswordRequest: {
+        type: "object",
+        properties: {
+          password: { type: "string" },
         },
-        SkilledForgotPasswordRequest: {
-          type: "object",
-          properties: {
-            email: { type: "string" },
-          },
-          required: ["email"],
+      },
+    },
+    user: {
+      UserCreateRequest: {
+        type: "object",
+        properties: {
+          firstName: { type: "string" },
+          lastName: { type: "string" },
+          email: { type: "string" },
+          phoneNumber: { type: "string" },
+          password: { type: "string" },
+          confirmpassword: { type: "string" },
         },
-        SkilledResetPasswordRequest: {
-          type: "object",
-          properties: {
-            password: { type: "string" },
-          },
-          required: ["password"],
+      },
+      UserVerifyRequest: {
+        type: "object",
+        properties: {
+          otp: { type: "number" },
+        },
+      },
+      UserLoginRequest: {
+        type: "object",
+        properties: {
+          email: { type: "string" },
+          password: { type: "string" },
+        },
+      },
+      UserForgotPasswordRequest: {
+        type: "object",
+        properties: {
+          email: { type: "string" },
+        },
+      },
+      UserResetPasswordRequest: {
+        type: "object",
+        properties: {
+          password: { type: "string" },
+        },
+      },
+    },
+    skilled: {
+      SkilledCreateRequest: {
+        type: "object",
+        properties: {
+          firstName: { type: "string" },
+          lastName: { type: "string" },
+          email: { type: "string" },
+          phone: { type: "string" },
+          password: { type: "string" },
+          confirmpassword: { type: "string" },
+        },
+        required: ["firstName", "lastName", "email", "phone", "password"],
+      },
+      SkilledLoginRequest: {
+        type: "object",
+        properties: {
+          email: { type: "string" },
+          password: { type: "string" },
+        },
+        required: ["email", "password"],
+      },
+      SkilledVerifyRequest: {
+        type: "object",
+        properties: {
+          otp: { type: "number" },
+        },
+        required: ["otp"],
+      },
+      SkilledForgotPasswordRequest: {
+        type: "object",
+        properties: {
+          email: { type: "string" },
+        },
+        required: ["email"],
+      },
+      SkilledResetPasswordRequest: {
+        type: "object",
+        properties: {
+          password: { type: "string" },
+        },
+        required: ["password"],
+      },
+    },
+    profile: {
+      ProfileCreateRequest: {
+        type: "object",
+        properties: {
+          firstName: { type: "string" },
+          lastName: { type: "string" },
+          email: { type: "string" },
+          phoneNumber: { type: "string" },
+        },
+      },
+      ProfileUpdateRequest: {
+        type: "object",
+        properties: {
+          firstName: { type: "string" },
+          lastName: { type: "string" },
+          email: { type: "string" },
+          phoneNumber: { type: "string" },
         },
       },
     },

@@ -9,5 +9,6 @@ profileRoute.post(
 
   profileController.create
 );
-
+profileRoute.delete('/delete/:id',profileController.delete)
+profileRoute.put('/update/:id',profileController.updating)
 export default profileRoute;
