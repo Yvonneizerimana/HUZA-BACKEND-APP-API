@@ -1,13 +1,11 @@
-import profileController from "../controllers/profile.controller.js";
-import upload from "../middlewares/fileupload.js";
-import { Router } from "express";
-const profileRoute = Router();
+import express from 'express';
+import profileController from '../controllers/profile.controller.js';
+import authCheck from "../utils/authCheck.js"
 
-profileRoute.post(
-  "/createProfile",
-  upload.array("documents"),
+const router = express.Router();
 
-  profileController.create
-);
+router.post('/createProfile', authCheck.skilled,profileController.create);
+router.put('/update/:id', authCheck.skilled, profileController.update);
+router.delete('/delete/:id', authCheck.skilled, profileController.delete);
 
-export default profileRoute;
+export default router;
