@@ -9,6 +9,7 @@ import documentation from "./doc/documentation.js";
 import skilledroute from "./routes/index.js";
 
 import profileRoute from "./routes/index.js";
+import broute from "./routes/index.js";
 //  import authJwt from "./helper.js/jwt.js";
 
 // import skilledroute from "./routes/skilled.route.js";
@@ -33,7 +34,7 @@ app.use("/api-doc", swaggerUi.setup(documentation));
 app.use("/api", adminRouter);
 app.use("/api", skilledroute);
 app.use("/api", profileRoute);
-// app.use("/api/v1",route)
+app.use("/api/",broute)
 
 //connect database
 
