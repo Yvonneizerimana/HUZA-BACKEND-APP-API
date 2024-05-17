@@ -1,43 +1,78 @@
-import adminModel from "../models/admin.model.js";
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
+import adminModel from "../models/allUsers.model.js";
 
-const checkUsers={
+dotenv.config();
 
-    //admin check
-     admin:async (req, res, next) => {
-    const tokenn= req.cookies.token;
-    try {
-        if (!tokenn) {
-            return res.status(401).json({ success: false, message: "Access token not found" });
-        }
-
+const checkUsers = {
+    admin: async (req, res, next) => {
         try {
-            const payload = jwt.verify(tokenn,process.env.TOOKEN_SECRETE); 
+            const token = req.cookies.token;
+            if (!token) {
+                return res.status(401).json({ success: false, message: "Access token not found" });
+            }
+
+            const payload = jwt.verify(token, process.env.TOKEN_SECRET);
             const email = payload.email;
 
             const user = await adminModel.findOne({ email: email });
-            if (!user) {
-                return res.status(404).json({ success: false, message: "User not found" });
+            if (!user || user.role !== "admin") {
+                return res.status(403).json({ success: false, message: "Access denied. You're not authorized as an admin." });
             }
 
-            if (user.role!== "admin") {
-                return res.status(403).json({ success: false, message: "Access denied you're not authorized as admin" });
-            }
-             
             next();
-            
         } catch (error) {
-            console.log(error.message);
+            console.error(error.message);
             return res.status(401).json({ success: false, message: "Invalid access token" });
         }
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-}
+    },
 
-}
+    user: async (req, res, next) => {
+        try {
+            const token = req.cookies.token;
+            if (!token) {
+                return res.status(401).json({ success: false, message: "Access token not found" });
+            }
+
+            const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+            const email = payload.email;
+
+            const user = await adminModel.findOne({ email: email });
+            if (!user || user.role !== "user") {
+                return res.status(403).json({ success: false, message: "Access denied. You're not authorized as a user." });
+            }
+
+            next();
+        } catch (error) {
+            console.error(error.message);
+            return res.status(401).json({ success: false, message: "Invalid access token" });
+        }
+    },
+
+    skilled: async (req, res, next) => {
+        const token = req.cookies.token;
+        console.log(token)
+        try {
+        
+            
+            if (!token) {
+                return res.status(401).json({ success: false, message: "Access token not found" });
+            }
+
+            const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+            const emailpayload = payload.email;
+
+            const user = await adminModel.findOne({ email: emailpayload });
+            if (user.role !== "skilled") {
+                return res.status(403).json({ success: false, message: "Access denied. You're not authorized as a skilled user." });
+            }
+
+            next();
+        } catch (error) {
+            console.error(error.message);
+            return res.status(401).json({ success: false, message: "Invalid access token" });
+        }
+    }
+};
 
 export default checkUsers;

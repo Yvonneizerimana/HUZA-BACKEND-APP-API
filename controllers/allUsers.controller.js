@@ -1,7 +1,7 @@
-import adminModel from '../models/admin.model.js'
+import allUsersModel from '../models/allUsers.model.js'
 import sgMail from '@sendgrid/mail'
 import { BadRequestError } from '../errors/index.js'
-// import NotFoundError from '../errors/index.js'
+
 import {validationResult} from 'express-validator'
 import asyncWrapper from '../errors/Async.js'
 import bcrypt from 'bcrypt'
@@ -11,14 +11,14 @@ import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 
 
-const admin={
+const allUsers={
 
-    createAdmin: asyncWrapper(async (req, res, next) => {
+    create: asyncWrapper(async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return next(new BadRequestError(errors.array()[0].msg));
         }
-        const foundUser = await adminModel.findOne({ email: req.body.email });
+        const foundUser = await allUsersModel.findOne({ email: req.body.email });
     if (foundUser) {
         return next(new BadRequestError("Email already in use"));
     };
@@ -32,17 +32,17 @@ const admin={
                     return otp
                 }
                 const otp=otpGenerator()
-                adminModel.otpExpires=Date.now() + 8 * 60 * 1000;
+                allUsersModel.otpExpires=Date.now() + 8 * 60 * 1000;
 
                 
                 const hashedPassword=await bcrypt.hash(req.body.password,10)
                 const password = await bcrypt.hash(req.body.confirmpassword,10)
-                const addAdmin = new adminModel({
+                const adduser = new allUsersModel({
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
                     phoneNumber:req.body.phoneNumber,
-             
+                    role:req.body.role,
                     password:hashedPassword,
                     confirmpassword:password,
                     otp: otp,
@@ -50,7 +50,7 @@ const admin={
                     
                 });
             
-                const savedUser = await addAdmin.save();
+                const savedUser = await adduser.save();
 
                 //sending email containing otp
                 const sendGridKey = process.env.SENDGRID_KEY;
@@ -59,7 +59,7 @@ const admin={
                 const mailOptions = {
                     from: 'yvannyizerimana@gmail.com', // sender address
                     to: req.body.email, // receiver address
-                    subject: 'Welcome to our platform', // Subject line
+                    subject: 'Sign Up!! ', // Subject line
                     html: `Thank you for creating an account!<br><br>enter this numbers to verify your account: <br><br><B> ${otp}<B>` // email body
                 };
 
@@ -68,7 +68,7 @@ const admin={
                 
         if (savedUser) {
             return res.status(201).json({
-                message: "User account created!",
+                message: "User account created successfuly!",
                 user: savedUser
             });
         }
@@ -85,9 +85,9 @@ ValidateOpt:asyncWrapper(async(req,res,next)=>{
         }
     
         // Checking if the given opt is stored in our database
-        const foundUser = await adminModel.findOne({ otp: req.body.otp });
+        const foundUser = await allUsersModel.findOne({ otp: req.body.otp });
         if (!foundUser) {
-            next(new UnauthorizedError('Authorization denied'));
+            next(new BadRequestError(`user with this otp  ${req.body.otp} doesn't exist`));
         };
     
         // Checking if the otp is expired or not.
@@ -101,7 +101,7 @@ ValidateOpt:asyncWrapper(async(req,res,next)=>{
     
         if (savedUser) {
             return res.status(201).json({
-                message: "User account verified!",
+                message: "your account verified!",
                 user: savedUser
             });
         }
@@ -115,10 +115,9 @@ loginUser: async (req, res, next) => {
   try {
     if (!email || !password) {
       res.status(400);
-      throw new Error('Please provide email as username and password');
+      throw new Error('Please provide username or password');
     }
-
-    const user=await adminModel.findOne({ email });
+    const user=await allUsersModel.findOne({ email });
     if (!user) {
       res.status(401).json({ message: "Invalid username or password" });
       return;
@@ -163,9 +162,12 @@ logout: (req, res) => {
   forgotPassword: async (req, res, next) => {
     const { email } = req.body;
     try {
-      const user = await adminModel.findOne({ email });
+      const user = await allUsersModel.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: "User not found" });
+      }
+      if(user.role==="admin"){
+        return res.status(404).json({ message: "reach out to your staff for a new password" });
       }
 
       function generateRandomToken() {
@@ -204,7 +206,7 @@ logout: (req, res) => {
   
     try {
         // Find user by reset token
-        const user = await adminModel.findOne({ resetToken: token });
+        const user = await allUsersModel.findOne({ resetToken: token });
   
         if (!user) {
             return res.status(400).json({ message: 'Invalid or expired token' });
@@ -234,4 +236,4 @@ logout: (req, res) => {
   }
 }
 
-export default admin;
+export default allUsers;

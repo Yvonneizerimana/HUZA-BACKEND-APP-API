@@ -1,7 +1,7 @@
 import {model, Schema} from 'mongoose'
 // import bcrypt from 'bcrypt'
 
-const userSchema = new Schema({
+const allUsersSchema = new Schema({
     firstName:{
         type: 'string',
         required: true
@@ -22,7 +22,11 @@ const userSchema = new Schema({
     },
     role:{
         type: 'string',
-        default: 'user',
+        required:true,
+        enum:{
+            values:['user','admin','skilled'],
+            message:'{VALUE} is not a valid role'
+        }
     },
     password:{
         type: 'string',
@@ -64,6 +68,7 @@ const userSchema = new Schema({
             delete ret._id;
             delete ret.__v;
             delete ret.password;
+            delete ret.confirmpassword;
             return ret;
         }
     },
@@ -77,4 +82,4 @@ timestamps:true
 //  })
 
 
-export default model("user",userSchema);
+export default model("allUsers", allUsersSchema);
