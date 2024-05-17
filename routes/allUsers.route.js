@@ -1,4 +1,4 @@
-import allUsersController from '../controllers/allUsers.Controller.js'
+import allUsersController from '../controllers/allUsers.controller.js'
 import validation from "../middlewares/Validation.js"
 // import checkUsers from "../middlewares/authCheck.js";
 import express from 'express';
