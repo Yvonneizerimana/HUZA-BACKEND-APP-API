@@ -1,6 +1,4 @@
-import userModel from "../models/user.model.js";
-import skilledModel from "../models/skilled.model.js"
-import adminModel from "../models/admin.model.js"
+import userModel from "../models/allUsers.model.js";
 
 import dotenv from "dotenv";
 dotenv.config();

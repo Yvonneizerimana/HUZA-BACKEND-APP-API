@@ -7,7 +7,7 @@ const contactController = {
        const savedContact=newContact.save()
         return res.status(201).json({
             message: "Contact created successfully",
-            savedContact
+            savedContact:savedContact
         });
     },
     listContact:asyncWrapper(async(req,res)=>{

@@ -86,6 +86,17 @@ const profileSchema = new Schema(
       type: String,
       required: false,
     },
+    category:{
+      type: String,
+      required: true,
+      enum: ["Culnary Art", "Makeup Design", "Brainding", "Plaint"],
+    },
+    status:{
+type: String,
+      required: false,
+      default: "Pending",
+    },
+    
   },
   { timestamps: true }
 );

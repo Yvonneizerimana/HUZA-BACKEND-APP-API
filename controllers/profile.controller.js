@@ -1,6 +1,7 @@
 // controllers/profileController.js
 import profileModel from "../models/profile.model.js";
 import upload from "../middlewares/fileupload.js";
+import sgMail from '@sendgrid/mail'
 
 const profileController = {
   create: async (req, res) => {
@@ -12,7 +13,7 @@ const profileController = {
       }
 
       try {
-        const { firstName, lastName, email, Address, education } = req.body;
+        const { firstName, lastName, email, Address, education, category} = req.body;
 
         const profile = await profileModel.create({
           firstName,
@@ -36,6 +37,8 @@ const profileController = {
             certificate: req.files['documents[certificate]'] ? req.files['documents[certificate]'][0].filename : null,
             photo: req.files['documents[photo]'] ? req.files['documents[photo]'][0].filename : null,
           },
+          category,
+          
         });
 
         res.status(200).json({
@@ -75,7 +78,7 @@ const profileController = {
       }
 
       try {
-        const { firstName, lastName, email, Address, education } = req.body;
+        const { firstName, lastName, email, Address, education, category } = req.body;
 
         const updateData = {};
 
@@ -106,6 +109,7 @@ const profileController = {
           if (req.files['documents[certificate]']) updateData.documents.certificate = req.files['documents[certificate]'][0].filename;
           if (req.files['documents[photo]']) updateData.documents.photo = req.files['documents[photo]'][0].filename;
         }
+        if (category) updateData.category = category;
 
         const updating = await profileModel.findByIdAndUpdate(req.params.id, updateData, { new: true });
         res.status(201).json({
@@ -120,6 +124,89 @@ const profileController = {
       }
     });
   },
+
+  viewProfileById:async(req,res) => {
+    try {
+      const profile = await profileModel.findById(req.query.id);
+      if(profile){
+        profile.status = 'in review';
+        await profile.save();
+      }
+      res.status(200).json({
+        status: "success",
+        profile: profile,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    }
+  },
+viewProfileByCategory:async(req, res) => { 
+  try {
+    const profile = await profileModel.find({ category: req.query.category });
+    res.status(200).json({
+      status: "success",
+      profile: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+verifyProfileByid:async(req, res) => {
+  try {
+    const profile = await profileModel.findById(req.query.id);
+    if(profile && profile.status === "in review" ){
+      profile.status ='approved';
+      await profile.save();
+    }
+    res.status(200).json({
+      status: "success",
+      profile: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+denyProfileByEmail: async (req, res) => {
+  try {
+    const profile = await profileModel.findOne({ email: req.query.email }); // Corrected to find profile by email
+    if (profile && profile.status === "in review") {
+      profile.status = 'rejected';
+      await profile.save();
+      const sendGridKey = process.env.SENDGRID_KEY;
+      sgMail.setApiKey(sendGridKey);
+
+      const mailOptions = {
+        from: 'yvannyizerimana@gmail.com',
+        to: req.query.email,
+        subject: 'Profile Not Approved',
+        html: `Hello ${req.body.firstName} ${req.body.lastName},<br><br>Thank you for taking your time.<br>After careful consideration, we found that your document's do not fulfill all the requirements needed.<br>Please review all the requirements carefully and try again.<br><br><br><b>HUZA App!</b>`
+      };
+
+      await sgMail.send(mailOptions);
+      console.log('Email sent successfully');
+    }
+    const deletedProfile = await profileModel.findByIdAndDelete(req.query.id);
+    res.status(200).json({
+      status: "Profile rejected and deleted successfully",
+      profile: deletedProfile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+
 
 };
 
