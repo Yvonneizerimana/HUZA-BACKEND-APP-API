@@ -105,4 +105,7 @@ const upload = multer({ storage: storage }).fields([
 
 const Profile = mongoose.model("Profile", profileSchema);
 
-export  {upload,Profile}
+export{
+  upload,
+  Profile
+}

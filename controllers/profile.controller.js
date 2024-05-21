@@ -65,7 +65,7 @@ const profileController = {
 
   delete: async (req, res) => {
     try {
-      const removing = await profileModel.findByIdAndDelete(req.params.id);
+      const removing = await Profile.findByIdAndDelete(req.params.id);
       res.status(201).json({
         message: 'Profile was deleted',
         contact: removing,
@@ -120,7 +120,7 @@ const profileController = {
         }
         if (category) updateData.category = category;
 
-        const updating = await profileModel.findByIdAndUpdate(req.params.id, updateData, { new: true });
+        const updating = await Profile.findByIdAndUpdate(req.params.id, updateData, { new: true });
         res.status(201).json({
           message: 'Profile was updated',
           contact: updating,
@@ -136,7 +136,7 @@ const profileController = {
 
   viewProfileById:async(req,res) => {
     try {
-      const profile = await profileModel.findById(req.query.id);
+      const profile = await Profile.findById(req.query.id);
       if(profile){
         profile.status = 'in review';
         await profile.save();
@@ -154,7 +154,7 @@ const profileController = {
   },
 viewProfileByCategory:async(req, res) => { 
   try {
-    const profile = await profileModel.find({ category: req.query.category });
+    const profile = await Profile.find({ category: req.query.category });
     res.status(200).json({
       status: "success",
       profile: profile,
@@ -168,7 +168,7 @@ viewProfileByCategory:async(req, res) => {
 },
 verifyProfileByid:async(req, res) => {
   try {
-    const profile = await profileModel.findById(req.query.id);
+    const profile = await Profile.findById(req.query.id);
     if(profile && profile.status === "in review" ){
       profile.status ='approved';
       await profile.save();
@@ -186,7 +186,7 @@ verifyProfileByid:async(req, res) => {
 },
 denyProfileByEmail: async (req, res) => {
   try {
-    const profile = await profileModel.findOne({ email: req.query.email }); // Corrected to find profile by email
+    const profile = await Profile.findOne({ email: req.query.email }); // Corrected to find profile by email
     if (profile && profile.status === "in review") {
       profile.status = 'rejected';
       await profile.save();
@@ -203,7 +203,7 @@ denyProfileByEmail: async (req, res) => {
       await sgMail.send(mailOptions);
       console.log('Email sent successfully');
     }
-    const deletedProfile = await profileModel.findByIdAndDelete(req.query.id);
+    const deletedProfile = await Profile.findByIdAndDelete(req.query.id);
     res.status(200).json({
       status: "Profile rejected and deleted successfully",
       profile: deletedProfile,
@@ -217,7 +217,7 @@ denyProfileByEmail: async (req, res) => {
 },
 allProfile:async(req,res)=>{
   try {
-    const profile = await profileModel.find();
+    const profile = await Profile.find();
     res.status(200).json({
       status: "success",
       profile: profile,
