@@ -49,8 +49,12 @@ app.use("/api-doc", swaggerUi.setup(documentation));
 app.use("/api", adminRouter);
 app.use("/api", skilledroute);
 app.use("/api", profileRoute);
+<<<<<<< HEAD
+app.use("/api/", broute);      
+=======
 
 app.use("/api", broute);
+>>>>>>> main
 
 // app.use("/api/v1",route)
 
@@ -65,4 +69,7 @@ try {
 } catch (err) {
   console.log(err);
 }
+
+const date = new Date
+console.log(date)
 

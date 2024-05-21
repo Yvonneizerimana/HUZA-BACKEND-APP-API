@@ -24,6 +24,7 @@ const swaggerDocumentation = {
     { name: "AllUsers", description: "User's API" },
     { name: "Profile", description: "Profile API" },
     { name: "Contact", description: "Contact API" },
+    { name: "Booking", description: "Booking API" },
   ],
   paths: {
     "/allUsers/create": {
@@ -448,7 +449,7 @@ const swaggerDocumentation = {
             type: "string",
             description: "Category",
             required: true,
-            enum: ["Culnary Art", "Makeup Design", "Branding", "Plaint"],
+            enum: ["Culnary Art", "Makeup Design", "Brainding", "Plaint"],
           },
           {
             in: "formData",
@@ -547,6 +548,18 @@ const swaggerDocumentation = {
         responses: {
           200: {
             description: "Profile rejected successfully",
+          },
+        },
+      },
+    },
+    "/profile/allProfile": {
+      get: {
+        summary: "List all profile",
+        tags: ["Profile"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: {
+            description: "List of all profiles retrieved successfully",
           },
         },
       },
@@ -672,6 +685,81 @@ const swaggerDocumentation = {
         },
       },
     },
+    "/booking/createBook": {
+      post: {
+        summary: "Create a new book",
+        tags: ["Booking"],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            description: "Book data to create",
+            required: true,
+            schema: {
+              $ref: "#/definitions/book/BookCreateRequest"
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "New book created successfully",
+          },
+        },
+      },
+    },
+    "/booking/delete": {
+      delete: {
+        summary: "Delete a booking",
+        tags: ["Booking"],
+        consumes: ["application/json"],
+        parameters: [
+          {
+            in: "query",
+            name: "id",
+            description: "ID of the booking to delete",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Booking deleted successfully",
+          },
+        },
+      },
+    },
+    "/booking/list/{name}": {
+      get: {
+        summary: "Get bookings by name",
+        tags: ["Booking"],
+        parameters: [
+          {
+            in: "path",
+            name: "name",
+            description: "Name to search bookings for",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "OK",
+          },
+        },
+      },
+    },
+    "/booking/allbooking": {
+      get: {
+        summary: "Get all bookings",
+        tags: ["Booking"],
+        responses: {
+          200: {
+            description: "OK",
+          },
+        },
+      },
+    }, 
   },
   definitions: {
     allUsers: {
@@ -778,7 +866,21 @@ const swaggerDocumentation = {
         },
         required: ["firstName", "lastName", "email", "phoneNumber", "message"],
       },  
-    } 
+    },
+    book: {
+      BookCreateRequest: {
+        type: "object",
+        properties: {
+          name: { type: "string", required: true },
+          phoneNumber: { type: "string", required: true },
+          email: { type: "string", required: true },
+          address: { type: "string", required: true },
+          date: { type: "string", required: true },
+          details: { type: "string", required: true }
+        },
+        required: ["name", "phoneNumber", "email", "address", "date", "details"],
+      },
+    },
   },
 };
 
