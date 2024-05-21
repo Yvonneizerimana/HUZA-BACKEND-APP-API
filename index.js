@@ -50,7 +50,7 @@ app.use("/api", adminRouter);
 app.use("/api", skilledroute);
 app.use("/api", profileRoute);
 
-app.use("/api/", broute);
+app.use("/api", broute);
 
 // app.use("/api/v1",route)
 
