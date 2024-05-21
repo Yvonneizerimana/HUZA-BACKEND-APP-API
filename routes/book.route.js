@@ -3,7 +3,7 @@ import Router from "express"
 const broute = Router()
 
 broute.post("/createBook",bookController.book)
-broute.delete("/delete",bookController.book.deleteBooking)
+broute.delete("/delete",bookController.deleteBooking)
 broute.get("/list/:name",bookController.getbookingbyname)
 broute.get("/allbooking",bookController.allbooking)
 
