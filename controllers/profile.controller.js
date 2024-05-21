@@ -1,21 +1,29 @@
 // controllers/profileController.js
-import profileModel from "../models/profile.model.js";
-import upload from "../middlewares/fileupload.js";
+// import profileModel from "../models/profile.model.js";
+import { Profile, upload }from "../models/profile.model.js"
+// import upload from "../middlewares/fileupload.js";
 import sgMail from '@sendgrid/mail'
 
 const profileController = {
   create: async (req, res) => {
-    upload(req, res, async (err) => {
+    upload(req, res, async (err) => {  // Changed from upload.multiple to just upload
       if (err) {
-        return res.status(400).json({
-          message: err.message,
-        });
+        console.log(err);
+        return res.status(400).json({ message: err.message });
       }
+      // console.log(req.files)
+
 
       try {
-        const { firstName, lastName, email, Address, education, category} = req.body;
-
-        const profile = await profileModel.create({
+        const { firstName, lastName, email, Address, education, category } = req.body;
+  
+        // Extract file paths from req.files (assuming successful upload)
+        const resumePath = req.files['documents[resume]'] ? req.files['documents[resume]'][0].path : null;
+        const nationalIDPath = req.files['documents[nationalID]'] ? req.files['documents[nationalID]'][0].path : null;
+        const certificatePath = req.files['documents[certificate]'] ? req.files['documents[certificate]'][0].path : null;
+        const photoPath = req.files['documents[photo]'] ? req.files['documents[photo]'][0].path : null;
+  
+        const newProfile = await Profile.create({
           firstName,
           lastName,
           email,
@@ -32,20 +40,21 @@ const profileController = {
             timeofstudy: education.timeofstudy,
           },
           documents: {
-            resume: req.files['documents[resume]'] ? req.files['documents[resume]'][0].filename : null,
-            nationalID: req.files['documents[nationalID]'] ? req.files['documents[nationalID]'][0].filename : null,
-            certificate: req.files['documents[certificate]'] ? req.files['documents[certificate]'][0].filename : null,
-            photo: req.files['documents[photo]'] ? req.files['documents[photo]'][0].filename : null,
+            resume: resumePath,
+            nationalID: nationalIDPath,
+            certificate: certificatePath,
+            photo: photoPath,
           },
           category,
-          
         });
-
+  
+        // await newProfile.save(); // Save the new profile to the database
+  
         res.status(200).json({
           status: "success",
-          profile: profile,
+          profile: newProfile,
         });
-      } catch (error) {
+      }  catch (error) {
         res.status(500).json({
           status: "error",
           message: error.message,
