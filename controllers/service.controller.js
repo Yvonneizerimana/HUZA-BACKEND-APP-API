@@ -37,15 +37,23 @@ const serviceController = {
     updateService: async (req, res) => {
         try {
             const updatedService = await serviceModel.findByIdAndUpdate(req.query.id, req.body, { new: true });
-            const savedOne=await updatedService.save()
+    
+            if (!updatedService) {
+                return res.status(404).json({ error: "Service not found" });
+            }
+    
+            const savedOne = await updatedService.save();
+    
             return res.status(200).json({
-                updatedService: savedOne,
-                status: 'success'
+                status: 'success',
+                updatedService: savedOne
             });
         } catch (error) {
+            console.log(error.message);
             return res.status(500).json({ error: error.message });
         }
     }
+    
 }
 
 export default serviceController;

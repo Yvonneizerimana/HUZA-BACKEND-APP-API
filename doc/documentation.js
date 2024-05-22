@@ -196,84 +196,84 @@ const swaggerDocumentation = {
           },
           {
             in: "formData",
-            name: "Address[country]",
+            name: "country",
             type: "string",
             description: "Country",
             required: true,
           },
           {
             in: "formData",
-            name: "Address[province]",
+            name: "province",
             type: "string",
             description: "Province",
             required: true,
           },
           {
             in: "formData",
-            name: "Address[district]",
+            name: "district",
             type: "string",
             description: "District",
             required: true,
           },
           {
             in: "formData",
-            name: "Address[sector]",
+            name: "sector",
             type: "string",
             description: "Sector",
             required: true,
           },
           {
             in: "formData",
-            name: "education[school]",
+            name: "school",
             type: "string",
             description: "School",
             required: true,
           },
           {
             in: "formData",
-            name: "education[major]",
+            name: "major",
             type: "string",
             description: "Major",
             required: true,
           },
           {
             in: "formData",
-            name: "education[didyoufinished]",
+            name: "didyoufinished",
             type: "boolean",
             description: "Did you finish?",
             required: true,
           },
           {
             in: "formData",
-            name: "education[timeofstudy]",
+            name: "timeofstudy",
             type: "string",
             description: "Time of study",
             required: true,
           },
           {
             in: "formData",
-            name: "documents[resume]",
+            name: "resume",
             type: "file",
             description: "Resume file",
             required: true,
           },
           {
             in: "formData",
-            name: "documents[nationalID]",
+            name: "nationalID",
             type: "file",
             description: "National ID file",
             required: true,
           },
           {
             in: "formData",
-            name: "documents[certificate]",
+            name: "certificate",
             type: "file",
             description: "Certificate file",
             required: true,
           },
           {
             in: "formData",
-            name: "documents[photo]",
+            name: "photo",
             type: "file",
             description: "Photo file",
             required: true,
@@ -286,15 +286,7 @@ const swaggerDocumentation = {
             required: true,
             enum: ["Culnary Art", "Makeup Design", "Branding", "Plaint"],
           },
-          {
-            in: "formData",
-            name: "status",
-            type: "string",
-            description: "Status",
-            required: false,
-            enum: ["Pending", "Approved", "Rejected"],
-            default: "Pending",
-          },
+          
         ],
         responses: {
           200: {
@@ -361,84 +353,84 @@ const swaggerDocumentation = {
           },
           {
             in: "formData",
-            name: "Address[country]",
+            name: "country",
             type: "string",
             description: "Country",
            
           },
           {
             in: "formData",
-            name: "Address[province]",
+            name: "province",
             type: "string",
             description: "Province",
            
           },
           {
             in: "formData",
-            name: "Address[district]",
+            name: "district",
             type: "string",
             description: "District",
             
           },
           {
             in: "formData",
-            name: "Address[sector]",
+            name: "sector",
             type: "string",
             description: "Sector",
             
           },
           {
             in: "formData",
-            name: "education[school]",
+            name: "school",
             type: "string",
             description: "School",
            
           },
           {
             in: "formData",
-            name: "education[major]",
+            name: "major",
             type: "string",
             description: "Major",
             
           },
           {
             in: "formData",
-            name: "education[didyoufinished]",
+            name: "didyoufinished",
             type: "boolean",
             description: "Did you finish?",
             
           },
           {
             in: "formData",
-            name: "education[timeofstudy]",
+            name: "timeofstudy",
             type: "string",
             description: "Time of study",
            
           },
           {
             in: "formData",
-            name: "documents[resume]",
+            name: "resume",
             type: "file",
             description: "Resume file",
             
           },
           {
             in: "formData",
-            name: "documents[nationalID]",
+            name: "nationalID",
             type: "file",
             description: "National ID file",
             
           },
           {
             in: "formData",
-            name: "documents[certificate]",
+            name: "certificate",
             type: "file",
             description: "Certificate file",
             
           },
           {
             in: "formData",
-            name: "documents[photo]",
+            name: "photo",
             type: "file",
             description: "Photo file",
             
@@ -451,15 +443,7 @@ const swaggerDocumentation = {
             required: true,
             enum: ["Culnary Art", "Makeup Design", "Brainding", "Plaint"],
           },
-          {
-            in: "formData",
-            name: "status",
-            type: "string",
-            description: "Status",
-            required: false,
-            enum: ["Pending", "Approved", "Rejected"],
-            default: "Pending",
-          },
+          
         ],
         responses: {
           200: {
@@ -821,24 +805,25 @@ const swaggerDocumentation = {
         "description": "Service data to update",
         "required": true,
         "schema": {
-          "$ref": "#/definitions/service/ServiceUpdateRequest"
-        },
-        properties: {
-          photo: {
-            type: "string",
-            format: "binary",
-            description: "Photo of the service"
+          "$ref": "#/definitions/service/ServiceUpdateRequest",
+          properties: {
+            photo: {
+              type: "string",
+              format: "binary",
+              description: "Photo of the service"
+            },
+            category: {
+              type: "string",
+              description: "Category of the service",
+              enum: ["Category 1", "Category 2", "Category 3"]
+            },
+            description: {
+              type: "string",
+              description: "Description of the service"
+            }
           },
-          category: {
-            type: "string",
-            description: "Category of the service",
-            enum: ["Category 1", "Category 2", "Category 3"]
-          },
-          description: {
-            type: "string",
-            description: "Description of the service"
-          }
         },
+        
       }
     ],
     "responses": {
@@ -1010,19 +995,21 @@ const swaggerDocumentation = {
         properties: {
           photo: { type: "string" },
           category: { type: "string", required: true },
-          description: { type: "string", required: true },
+          description: { type: "string", required: true }
         },
-        required: ["category", "description"],
+        required: ["category", "description"]
       },
-    },
-    ServiceUpdateRequest: {
-      type: "object",
-      properties: {
-        photo: { type: "string" }, 
-        category: { type: "string" }, 
-        description: { type: "string" },
-      },
-    },
+      ServiceUpdateRequest: {
+        type: "object",
+        properties: {
+          photo: { type: "string" }, 
+          category: { type: "string" }, 
+          description: { type: "string" }
+        }
+      }
+    }
+    
+    
   },
 };
 
