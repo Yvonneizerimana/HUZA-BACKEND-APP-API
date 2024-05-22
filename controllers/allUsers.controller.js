@@ -182,10 +182,12 @@ logout: (req, res) => {
                 sgMail.setApiKey(sendGridKey);
 
                 const mailOptions = {
-                    from: 'yvannyizerimana@gmail.com', // sender address
-                    to: req.body.email, // receiver address
-                    subject: 'Welcome to our platform', // Subject line
-                    html: `please click here to reset your password: <br><br><B>http://localhost:5173/resetPassword/${resetToken}<B>` // email body
+
+                    from: 'yvannyizerimana@gmail.com', 
+                    to: req.body.email, 
+                    subject: 'Welcome to our platform', 
+                    html: `please click here to reset your password: <br><br><B>http://localhost:5173/Resetpassword/?token=${resetToken}<B>` 
+
                 };
 
                 await sgMail.send(mailOptions);

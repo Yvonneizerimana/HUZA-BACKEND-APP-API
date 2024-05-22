@@ -70,6 +70,7 @@ const profileSchema = new mongoose.Schema(
       enum: ["Culinary Art", "Makeup Design", "Braiding", "Paint"],
     },
   },
+
   { timestamps: false }
 );
 

@@ -80,7 +80,7 @@ const profileController = {
 
   delete: async (req, res) => {
     try {
-      const removing = await profileModel.findByIdAndDelete(req.params.id);
+      const removing = await Profile.findByIdAndDelete(req.params.id);
       res.status(201).json({
         message: "Profile was deleted",
         contact: removing,
@@ -96,81 +96,21 @@ const profileController = {
   update:async(req,res)=>{
     
 
+
   },
 
   viewProfileById: async (req, res) => {
     try {
-      const profile = await profileModel.findById(req.query.id);
-      if (profile) {
-        profile.status = "in review";
-        await profile.save();
-      }
-      res.status(200).json({
-        status: "success",
-        profile: profile,
-      });
-    } catch (error) {
-      res.status(500).json({
-        status: "error",
-        message: error.message,
-      });
-    }
-  },
-  viewProfileByCategory: async (req, res) => {
-    try {
-      const profile = await profileModel.find({ category: req.query.category });
-      res.status(200).json({
-        status: "success",
-        profile: profile,
-      });
-    } catch (error) {
-      res.status(500).json({
-        status: "error",
-        message: error.message,
-      });
-    }
-  },
-  verifyProfileByid: async (req, res) => {
-    try {
-      const profile = await profileModel.findById(req.query.id);
-      if (profile && profile.status === "in review") {
-        profile.status = "approved";
-        await profile.save();
-      }
-      res.status(200).json({
-        status: "success",
-        profile: profile,
-      });
-    } catch (error) {
-      res.status(500).json({
-        status: "error",
-        message: error.message,
-      });
-    }
-  },
-  denyProfileByEmail: async (req, res) => {
-    try {
-      const profile = await profileModel.findOne({ email: req.query.email }); // Corrected to find profile by email
-      if (profile && profile.status === "in review") {
-        profile.status = "rejected";
-        await profile.save();
-        const sendGridKey = process.env.SENDGRID_KEY;
-        sgMail.setApiKey(sendGridKey);
 
-        const mailOptions = {
-          from: "yvannyizerimana@gmail.com",
-          to: req.query.email,
-          subject: "Profile Not Approved",
-          html: `Hello ${req.body.firstName} ${req.body.lastName},<br><br>Thank you for taking your time.<br>After careful consideration, we found that your document's do not fulfill all the requirements needed.<br>Please review all the requirements carefully and try again.<br><br><br><b>HUZA App!</b>`,
-        };
+      const profile = await Profile.findById(req.query.id);
+      if(profile){
+        profile.status = 'in review';
 
-        await sgMail.send(mailOptions);
-        console.log("Email sent successfully");
+        await profile.save();
       }
-      const deletedProfile = await profileModel.findByIdAndDelete(req.query.id);
       res.status(200).json({
-        status: "Profile rejected and deleted successfully",
-        profile: deletedProfile,
+        status: "success",
+        profile: profile,
       });
     } catch (error) {
       res.status(500).json({
@@ -179,6 +119,87 @@ const profileController = {
       });
     }
   },
+
+viewProfileByCategory:async(req, res) => { 
+  try {
+    const profile = await Profile.find({ category: req.query.category });
+    res.status(200).json({
+      status: "success",
+      profile: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+verifyProfileByid:async(req, res) => {
+  try {
+    const profile = await Profile.findById(req.query.id);
+    if(profile && profile.status === "in review" ){
+      profile.status ='approved';
+      await profile.save();
+    }
+    res.status(200).json({
+      status: "success",
+      profile: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+denyProfileByEmail: async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ email: req.query.email }); // Corrected to find profile by email
+    if (profile && profile.status === "in review") {
+      profile.status = 'rejected';
+      await profile.save();
+      const sendGridKey = process.env.SENDGRID_KEY;
+      sgMail.setApiKey(sendGridKey);
+
+      const mailOptions = {
+        from: 'yvannyizerimana@gmail.com',
+        to: req.query.email,
+        subject: 'Profile Not Approved',
+        html: `Hello ${req.body.firstName} ${req.body.lastName},<br><br>Thank you for taking your time.<br>After careful consideration, we found that your document's do not fulfill all the requirements needed.<br>Please review all the requirements carefully and try again.<br><br><br><b>HUZA App!</b>`
+      };
+
+      await sgMail.send(mailOptions);
+      console.log('Email sent successfully');
+    }
+    const deletedProfile = await Profile.findByIdAndDelete(req.query.id);
+    res.status(200).json({
+      status: "Profile rejected and deleted successfully",
+      profile: deletedProfile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+allProfile:async(req,res)=>{
+  try {
+    const profile = await Profile.find();
+    res.status(200).json({
+      status: "success",
+      profile: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+},
+
+
+
   allProfile: async (req, res) => {
     try {
       const profile = await profileModel.find();
