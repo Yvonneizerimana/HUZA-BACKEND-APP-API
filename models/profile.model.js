@@ -73,7 +73,7 @@ const profileSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["Culinary Art", "Makeup Design", "Branding", "Plaint"],
+    enum: ["Culinary Art", "Makeup Design", "Branding", "Plaint"]
   },
   status: {
     type: String,
