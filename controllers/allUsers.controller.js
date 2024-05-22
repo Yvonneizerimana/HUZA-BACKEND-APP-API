@@ -27,7 +27,7 @@ const allUsers={
 
             
                 const otpGenerator=()=>{
-                    var otp=0;
+                    let otp=0;
                     otp=Math.ceil(Math.random()*1000000)
                     return otp
                 }
@@ -137,7 +137,7 @@ loginUser: async (req, res, next) => {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true
       };
-      // res.status(200).cookie("token", accessToken, options).json({message:"Your welcome to the platform",user: user.firstName + user.lastName });
+     
       res.cookie("token", token, options).status(200).json({
         success: true,
         token: token,
