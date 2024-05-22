@@ -759,7 +759,130 @@ const swaggerDocumentation = {
           },
         },
       },
-    }, 
+    },
+   "/service/createService": {
+  post: {
+    summary: "Create a new service",
+    tags: ["Service"],
+    security: [{ BearerAuth: [] }],
+    consumes: ["application/json"],
+    parameters: [
+      {
+        in: "body",
+        name: "body",
+        description: "Service data to create",
+        required: true,
+        schema: {
+          type: "object",
+          properties: {
+            photo: {
+              type: "string",
+              format: "binary",
+              description: "Photo of the service"
+            },
+            category: {
+              type: "string",
+              description: "Category of the service",
+              enum: ["Category 1", "Category 2", "Category 3"]
+            },
+            description: {
+              type: "string",
+              description: "Description of the service"
+            }
+          },
+          required: ["category", "description"]
+        }
+      }
+    ],
+    responses: {
+      200: {
+        description: "New service created successfully",
+      },
+    },
+  },
+},
+"/service/updateService": {
+  "put": {
+    "summary": "Update a service",
+    "tags": ["Service"],
+    "security": [{"BearerAuth": []}],
+    "consumes": ["application/json"],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "description": "ID of the service to update",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "serviceData",
+        "description": "Service data to update",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/service/ServiceUpdateRequest"
+        },
+        properties: {
+          photo: {
+            type: "string",
+            format: "binary",
+            description: "Photo of the service"
+          },
+          category: {
+            type: "string",
+            description: "Category of the service",
+            enum: ["Category 1", "Category 2", "Category 3"]
+          },
+          description: {
+            type: "string",
+            description: "Description of the service"
+          }
+        },
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Service updated successfully"
+      }
+    }
+  }
+}
+,
+    "/service/deleteService": {
+      delete: {
+        summary: "Delete a service",
+        tags: ["Service"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            in: "query",
+            name: "id",
+            description: "ID of the service to delete",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Service deleted successfully",
+          },
+        },
+      },
+    },
+    "/service/viewService": {
+      get: {
+        summary: "View service",
+        tags: ["Service"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: {
+            description: "Service retrieved successfully",
+          },
+        },
+      },
+    },
+    
   },
   definitions: {
     allUsers: {
@@ -879,6 +1002,25 @@ const swaggerDocumentation = {
           details: { type: "string", required: true }
         },
         required: ["name", "phoneNumber", "email", "address", "date", "details"],
+      },
+    },
+    service: {
+      ServiceCreateRequest: {
+        type: "object",
+        properties: {
+          photo: { type: "string" },
+          category: { type: "string", required: true },
+          description: { type: "string", required: true },
+        },
+        required: ["category", "description"],
+      },
+    },
+    ServiceUpdateRequest: {
+      type: "object",
+      properties: {
+        photo: { type: "string" }, 
+        category: { type: "string" }, 
+        description: { type: "string" },
       },
     },
   },
