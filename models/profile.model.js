@@ -1,108 +1,78 @@
-import mongoose from "mongoose"
-import multer from "multer"
-import path from "path" // For file upload handling
-import fs from "fs" // For file upload handling
+import mongoose from "mongoose";
 
-const profileSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  Address: {
+const profileSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: false,
+    },
+    lastName: {
+      type: String,
+      required: false,
+    },
+    email: {
+      type: String,
+      required: false,
+    },
+
     country: {
       type: String,
-      required: true,
+      required: false,
     },
     province: {
       type: String,
-      required: true,
+      required: false,
     },
     district: {
       type: String,
-      required: true,
+      required: false,
     },
     sector: {
       type: String,
-      required: true,
+      required: false,
     },
-  },
-  education: {
+
     school: {
       type: String,
-      required: true,
+      required: false,
     },
     major: {
       type: String,
-      required: true,
+      required: false,
     },
     didyoufinished: {
       type: Boolean,
-      required: true,
+      required: false,
     },
     timeofstudy: {
       type: String,
-      required: true,
+      required: false,
     },
-  },
-  documents: { // Update document types with paths (**Profile Data**)
     resume: {
       type: String,
-      required: true,
+      required: false,
     },
     nationalID: {
       type: String,
-      required: true,
+      required: false,
     },
     certificate: {
       type: String,
-      required: true,
+      required: false,
     },
     photo: {
       type: String,
-      required: true,
+      required: false,
+    },
+    category: {
+      type: String,
+      required: false,
+      enum: ["Culinary Art", "Makeup Design", "Braiding", "Paint"],
     },
   },
-  category: {
-    type: String,
-    required: true,
-    enum: ["Culinary Art", "Makeup Design", "Branding", "Plaint"],
-  },
-  status: {
-    type: String,
-    required: false,
-    default: "Pending",
-  },
-}, { timestamps: true });
-
-
-// Configure Multer for file upload (replace with your desired storage location)
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'upload/'); // Change this to your upload directory (ensure write permissions)
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname); // Get file extension
-    cb(null, uniqueSuffix + ext);
-  }
-});
-
-
-const upload = multer({ storage: storage }).fields([
-  { name: 'documents[resume]', maxCount: 1 },
-  { name: 'documents[nationalID]', maxCount: 1 },
-  { name: 'documents[certificate]', maxCount: 1 },
-  { name: 'documents[photo]', maxCount: 1 },
-])
+  { timestamps: false }
+);
 
 const Profile = mongoose.model("Profile", profileSchema);
 
-export  {upload,Profile}
+export default Profile;

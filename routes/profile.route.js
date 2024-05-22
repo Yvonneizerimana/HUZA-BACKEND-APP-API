@@ -1,10 +1,12 @@
 import express from 'express';
 import profileController from '../controllers/profile.controller.js';
-// import authCheck from "../utils/authCheck.js"
-
 const router = express.Router();
+import multer from 'multer';
 
-router.post('/createProfile',profileController.create);
+
+const upload = multer({dest:'upload/'})
+
+router.post('/createProfile',upload.fields([{name:'resume',maxCount:1},{name:'nationalID',maxCount:1},{name:'certificate',maxCount:1},{name:'photo',maxCount:1}]),profileController.create);
 router.put('/update/:id', profileController.update);
 router.delete('/delete/:id', profileController.delete);
 router.get('/viewProfileById',profileController.viewProfileById),
