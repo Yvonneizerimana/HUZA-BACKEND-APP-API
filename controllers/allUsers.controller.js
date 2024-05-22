@@ -185,7 +185,7 @@ logout: (req, res) => {
                     from: 'yvannyizerimana@gmail.com', // sender address
                     to: req.body.email, // receiver address
                     subject: 'Welcome to our platform', // Subject line
-                    html: `please click here to reset your password: <br><br><B>http://localhost:5173/resetPassword/${resetToken}<B>` // email body
+                    html: `please click here to reset your password: <br><br><B>http://localhost:5173/Resetpassword/${resetToken}<B>` // email body
                 };
 
                 await sgMail.send(mailOptions);
