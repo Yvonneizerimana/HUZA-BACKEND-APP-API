@@ -69,9 +69,14 @@ const profileSchema = new mongoose.Schema(
       required: false,
       enum: ["Culinary Art", "Makeup Design", "Braiding", "Paint"],
     },
+    status:{
+      type: String,
+      required: true,
+      default: "Pending",
+    }
   },
 
-  { timestamps: false }
+  { timestamps: true }
 );
 
 const Profile = mongoose.model("Profile", profileSchema);

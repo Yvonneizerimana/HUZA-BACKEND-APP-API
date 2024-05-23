@@ -183,6 +183,7 @@ denyProfileByEmail: async (req, res) => {
     });
   }
 },
+
 allProfile:async(req,res)=>{
   try {
     const profile = await Profile.find();

@@ -785,7 +785,7 @@ const swaggerDocumentation = {
     },
   },
 },
-"/service/updateService": {
+"/service/updateService/:id": {
   "put": {
     "summary": "Update a service",
     "tags": ["Service"],
@@ -801,7 +801,7 @@ const swaggerDocumentation = {
       },
       {
         "in": "body",
-        "name": "serviceData",
+        "name": "body",
         "description": "Service data to update",
         "required": true,
         "schema": {

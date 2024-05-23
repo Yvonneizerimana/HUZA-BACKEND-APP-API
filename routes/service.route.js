@@ -6,7 +6,7 @@ const routerService = express.Router();
 
 routerService.post("/createService", serviceController.addService);
 
-routerService.put("/updateService", serviceController.updateService);
+routerService.put("/updateService/:id", serviceController.updateService);
 
 routerService.delete("/deleteService", serviceController.deleteService);
 
