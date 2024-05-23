@@ -13,9 +13,9 @@ routerService.post("/createService",upload.fields([{name:'photo',maxCount:1}]), 
 
 
 
-routerService.put("/updateService/:id", serviceController.updateService);
+routerService.put("/updateService/:id",serviceController.updateService);
 
-routerService.delete("/deleteService", serviceController.deleteService);
+routerService.delete("/deleteService",serviceController.deleteService);
 
 routerService.get("/viewService", serviceController.listService);
 
