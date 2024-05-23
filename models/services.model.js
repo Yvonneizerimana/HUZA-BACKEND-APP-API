@@ -3,28 +3,21 @@ import {model, Schema} from 'mongoose'
 
 const serviceSchema = new Schema({
     photo:{
-        type: 'string'
+        type: 'string',
+        required: false
         
     },
     category:{
         type: 'string',
-        required: true
+        required: false
         
     },
     description:{
         type: 'string',
-        required: true,
+        required: false,
         
     }
 },{
-    toJSON: {
-        transform: (doc, ret) => {
-            ret.id = ret._id;
-            delete ret._id;
-            delete ret.__v;
-            return ret;
-        }
-    },
 timestamps:true
 })
 
