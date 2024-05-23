@@ -806,24 +806,22 @@ const swaggerDocumentation = {
         "required": true,
         "schema": {
           "$ref": "#/definitions/service/ServiceUpdateRequest",
-          properties: {
-            photo: {
-              type: "string",
-              format: "binary",
-              description: "Photo of the service"
+          "properties": {
+            "photo": {
+              "type": "string",
+              "description": "Photo of the service"
             },
-            category: {
-              type: "string",
-              description: "Category of the service",
-              enum: ["Category 1", "Category 2", "Category 3"]
+            "category": {
+              "type": "string",
+              "description": "Category of the service",
+              "enum": ["Category 1", "Category 2", "Category 3"]
             },
-            description: {
-              type: "string",
-              description: "Description of the service"
+            "description": {
+              "type": "string",
+              "description": "Description of the service"
             }
-          },
-        },
-        
+          }
+        }
       }
     ],
     "responses": {
