@@ -62,23 +62,35 @@ const serviceController = {
       return res.status(500).json({ error: error.message });
     }
   },
-  updateService: async (req, res) => {
+ 
+
+ updateService:async (req, res) => {
     try {
-      const updatedService = await serviceModel.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-      );
-      return res.status(200).json({
-        status: "success",
-        updatedService: updatedService,
-      });
+        const { id } = req.params;
+        const updatedService = await serviceModel.findByIdAndUpdate(
+            id,
+            req.body,
+            { new: true }
+        );
+
+        if (!updatedService) {
+            return res.status(404).json({
+                status: "error",
+                message: "Service not found"
+            });
+        }
+
+        return res.status(200).json({
+            status: "success",
+            updatedService: updatedService
+        });
     } catch (error) {
-      console.log(error);
-      // return res.status(500).json({ error: error.message });
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
-  },
-};
+}
+
+}
 
 
 export default serviceController;

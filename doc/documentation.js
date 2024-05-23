@@ -747,36 +747,33 @@ const swaggerDocumentation = {
    "/service/createService": {
   post: {
     summary: "Create a new service",
-    tags: ["Service"],
-    security: [{ BearerAuth: [] }],
-    consumes: ["application/json"],
-    parameters: [
-      {
-        in: "body",
-        name: "body",
-        description: "Service data to create",
-        required: true,
-        schema: {
-          type: "object",
-          properties: {
-            photo: {
-              type: "string",
-              format: "binary",
-              description: "Photo of the service"
-            },
-            category: {
-              type: "string",
-              description: "Category of the service",
-              enum: ["Category 1", "Category 2", "Category 3"]
-            },
-            description: {
-              type: "string",
-              description: "Description of the service"
-            }
+        tags: ["Service"],
+        security: [{ BearerAuth: [] }],
+        consumes: ["multipart/form-data"],
+        parameters: [
+          
+          {
+            in: "formData",
+            name: "photo",
+            type: "file",
+            description: "Photo",
+            required: true,
           },
-          required: ["category", "description"]
-        }
-      }
+          {
+            in: "formData",
+            name: "category",
+            type: "string",
+            description: "Category",
+            required: true,
+          },
+          {
+            in: "formData",
+            name: "description",
+            type: "string",
+            description: "Description",
+            required: true,
+          },
+      
     ],
     responses: {
       200: {
@@ -785,53 +782,51 @@ const swaggerDocumentation = {
     },
   },
 },
-"/service/updateService/:id": {
-  "put": {
-    "summary": "Update a service",
-    "tags": ["Service"],
-    "security": [{"BearerAuth": []}],
-    "consumes": ["application/json"],
-    "parameters": [
-      {
-        "in": "path",
-        "name": "id",
-        "description": "ID of the service to update",
-        "required": true,
-        "type": "string"
-      },
-      {
-        "in": "body",
-        "name": "body",
-        "description": "Service data to update",
-        "required": true,
-        "schema": {
-          "$ref": "#/definitions/service/ServiceUpdateRequest",
-          "properties": {
-            "photo": {
-              "type": "string",
-              "description": "Photo of the service"
-            },
-            "category": {
-              "type": "string",
-              "description": "Category of the service",
-              "enum": ["Category 1", "Category 2", "Category 3"]
-            },
-            "description": {
-              "type": "string",
-              "description": "Description of the service"
-            }
-          }
-        }
-      }
+"/service/updateService/{id}": {
+  put: {
+    summary: "Update service",
+        tags: ["Service"],
+        security: [{ BearerAuth: [] }],
+        consumes: ["multipart/form-data"],
+        parameters: [
+          {
+            in: "path",
+            name: "id",
+            type: "string",
+            required: true,
+            description: "ID of the Service to update",
+          },
+          {
+            in: "formData",
+            name: "photo",
+            type: "file",
+            description: "Photo",
+            required: false,
+          },
+          {
+            in: "formData",
+            name: "category",
+            type: "string",
+            description: "Category",
+            required: false,
+          },
+          {
+            in: "formData",
+            name: "description",
+            type: "string",
+            description: "Description",
+            required: false,
+          },
+      
     ],
-    "responses": {
-      "200": {
-        "description": "Service updated successfully"
-      }
-    }
-  }
-}
-,
+    responses: {
+      200: {
+        description: "New service created successfully",
+      },
+    },
+  },
+},
+
     "/service/deleteService": {
       delete: {
         summary: "Delete a service",
