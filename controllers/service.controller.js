@@ -8,6 +8,7 @@ cloudinary.v2.config({
   api_secret: process.env.API_SECRET,
 });
 const serviceController = {
+
   addService: async (req, res) => {
     try {
       const { category, ...otherFields } = req.body;
@@ -78,5 +79,6 @@ const serviceController = {
     }
   },
 };
+
 
 export default serviceController;

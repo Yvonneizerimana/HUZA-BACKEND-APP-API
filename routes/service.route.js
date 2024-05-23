@@ -6,9 +6,12 @@ const routerService = express.Router();
 import multer from 'multer';
 
 
+
 const upload = multer({dest:'upload/'})
 
 routerService.post("/createService",upload.fields([{name:'photo',maxCount:1}]), serviceController.addService);
+
+
 
 routerService.put("/updateService/:id", serviceController.updateService);
 
