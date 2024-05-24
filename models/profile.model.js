@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import {mongoose,Schema} from "mongoose";
 
 const profileSchema = new mongoose.Schema(
   {
@@ -73,6 +73,11 @@ const profileSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: "Pending",
+    },
+    user:{
+      type:Schema.Types.ObjectId,
+      ref:'allUsers',
+      required:false
     }
   },
 
