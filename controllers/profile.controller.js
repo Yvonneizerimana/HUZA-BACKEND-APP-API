@@ -151,6 +151,18 @@ verifyProfileByid:async(req, res) => {
     if(profile && profile.status === "in review" ){
       profile.status ='approved';
       await profile.save();
+      const sendGridKey = process.env.SENDGRID_KEY;
+      sgMail.setApiKey(sendGridKey);
+
+      const mailOptions = {
+        from: 'yvannyizerimana@gmail.com',
+        to: req.query.email,
+        subject: 'Profile Approved',
+        html: `Hello ${profile.firstName} ${profile.lastName}, Your Profile has been approved<br> and published to public <br><br>HUZA App!`
+      };
+
+      await sgMail.send(mailOptions);
+      console.log('Email sent successfully');
     }
     res.status(200).json({
       status: "success",
@@ -176,7 +188,7 @@ denyProfileByEmail: async (req, res) => {
         from: 'yvannyizerimana@gmail.com',
         to: req.query.email,
         subject: 'Profile Not Approved',
-        html: `Hello ${req.body.firstName} ${req.body.lastName},<br><br>Thank you for taking your time.<br>After careful consideration, we found that your document's do not fulfill all the requirements needed.<br>Please review all the requirements carefully and try again.<br><br><br><b>HUZA App!</b>`
+        html: `Hello ${profile.firstName} ${profile.lastName},<br><br>Thank you for taking your time.<br>After careful consideration, we found that your document's do not fulfill all the requirements needed.<br>Please review all the requirements carefully and try again.<br><br><br><b>HUZA App!</b>`
       };
 
       await sgMail.send(mailOptions);

@@ -454,14 +454,14 @@ const swaggerDocumentation = {
     },
     "/profile/viewProfileById": {
       get: {
-        summary: "View profile by ID",
+        summary: "View profile by email",
         tags: ["Profile"],
         security: [{ BearerAuth: [] }],
         parameters: [
           {
             in: "query",
-            name: "id",
-            description: "ID of the profile to view",
+            name: "email",
+            description: "email of the profile to view",
             required: true,
             type: "string",
           },
