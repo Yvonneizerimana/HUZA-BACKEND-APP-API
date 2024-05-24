@@ -27,6 +27,7 @@ const serviceController = {
         }
       );
       const newService = await serviceModel.create({
+        category,
         photo: profileP.secure_url,
         ...otherFields,
       }); // Using create method
