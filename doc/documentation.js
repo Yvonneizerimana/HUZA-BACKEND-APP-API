@@ -452,7 +452,7 @@ const swaggerDocumentation = {
         },
       },
     },
-    "/profile/viewProfileById/{id}": {
+    "/profile/viewProfileById": {
       get: {
         summary: "View profile by ID",
         tags: ["Profile"],
