@@ -151,18 +151,6 @@ verifyProfileByid:async(req, res) => {
     if(profile && profile.status === "in review" ){
       profile.status ='approved';
       await profile.save();
-      const sendGridKey = process.env.SENDGRID_KEY;
-      sgMail.setApiKey(sendGridKey);
-
-      const mailOptions = {
-        from: 'yvannyizerimana@gmail.com',
-        to: req.query.email,
-        subject: 'Profile Approved',
-        html: `Hello ${req.body.firstName} ${req.body.lastName},<br><br>Your Profile has been Approved and published to public<b>HUZA App!</b>`
-      };
-
-      await sgMail.send(mailOptions);
-      console.log('Email sent successfully');
     }
     res.status(200).json({
       status: "success",
@@ -206,7 +194,6 @@ denyProfileByEmail: async (req, res) => {
     });
   }
 },
-
 allProfile:async(req,res)=>{
   try {
     const profile = await Profile.find();
@@ -221,6 +208,23 @@ allProfile:async(req,res)=>{
     });
   }
 },
+
+
+
+  allProfile: async (req, res) => {
+    try {
+      const profile = await profileModel.find();
+      res.status(200).json({
+        status: "success",
+        profile: profile,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    }
+  },
 };
 
 export default profileController;
