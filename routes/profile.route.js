@@ -14,5 +14,6 @@ router.get('/viewProfileByCategory',profileController.viewProfileByCategory)
 router.get('/approveProfile', profileController.verifyProfileByid)
 router.get('/reject', profileController.denyProfileByEmail)
 router.get("/allProfile", profileController.allProfile)
+router.get("/viewProfileByStatus", profileController.viewProfileByStatus)
 
-export default router;
+export default router; 

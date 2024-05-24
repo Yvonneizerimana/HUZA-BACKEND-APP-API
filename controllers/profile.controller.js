@@ -147,7 +147,7 @@ viewProfileByCategory:async(req, res) => {
 },
 verifyProfileByid:async(req, res) => {
   try {
-    const profile = await Profile.findById(req.query.id);
+    const profile = await Profile.findOne({ email: req.query.email });
     if(profile && profile.status === "in review" ){
       profile.status ='approved';
       await profile.save();
@@ -194,7 +194,7 @@ denyProfileByEmail: async (req, res) => {
       await sgMail.send(mailOptions);
       console.log('Email sent successfully');
     }
-    const deletedProfile = await Profile.findByIdAndDelete(req.query.id);
+    const deletedProfile= await Profile.deleteOne({ _id: profile._id });
     res.status(200).json({
       status: "Profile rejected and deleted successfully",
       profile: deletedProfile,
@@ -221,6 +221,21 @@ allProfile:async(req,res)=>{
     });
   }
 },
-};
 
+
+viewProfileByStatus:async(req, res)=>{
+  try {
+    const profile = await Profile.find({ status: 'approved' });
+    res.status(200).json({
+      status: "success",
+      profile: profile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+}
+};
 export default profileController;

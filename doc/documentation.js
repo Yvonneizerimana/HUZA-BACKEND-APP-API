@@ -494,6 +494,18 @@ const swaggerDocumentation = {
         },
       },
     },
+    "/profile/viewProfileByStatus": {
+      get: {
+        summary: "List of all approved profiles",
+        tags: ["Profile"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: {
+            description: "List of all approved profiles retrieved successfully",
+          },
+        },
+      },
+    },
     "/profile/approveProfile": {
       get: {
         summary: "Approve profile by ID",
