@@ -113,7 +113,7 @@ update:async(req,res)=>{
   viewProfileById: async (req, res) => {
     try {
 
-      const profile = await Profile.findById(req.query.id);
+      const profile = await Profile.findOne(req.query.user);
       if(profile){
         profile.status = 'in review';
 
