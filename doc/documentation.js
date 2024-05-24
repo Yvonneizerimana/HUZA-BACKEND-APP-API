@@ -495,27 +495,27 @@ const swaggerDocumentation = {
       },
     },
     "/profile/viewProfileByStatus": {
-      get: {
-        summary: "List of all approved profiles",
-        tags: ["Profile"],
-        security: [{ BearerAuth: [] }],
-        responses: {
-          200: {
-            description: "List of all approved profiles retrieved successfully",
+          get: {
+            summary: "List of all approved profiles",
+            tags: ["Profile"],
+            security: [{ BearerAuth: [] }],
+            responses: {
+              200: {
+                description: "List of all approved profiles retrieved successfully",
+              },
+            },
           },
         },
-      },
-    },
     "/profile/approveProfile": {
       get: {
-        summary: "Approve profile by ID",
+        summary: "Approve profile by email",
         tags: ["Profile"],
         security: [{ BearerAuth: [] }],
         parameters: [
           {
             in: "query",
-            name: "id",
-            description: "ID of the profile to approve",
+            name: "email",
+            description: "email of the profile to approve",
             required: true,
             type: "string",
           },
