@@ -58,8 +58,8 @@ const profileController = {
         }
       );
       const newProfile = await Profile.create({
-        // firstName,
-        // lastName,
+        firstName,
+        lastName,
         resume: profileR.secure_url,
         nationalID: profileN.secure_url,
         certificate: profileC.secure_url,
@@ -67,6 +67,8 @@ const profileController = {
         user,
         ...otherFields,
       });
+
+     
       res.status(200).json({
         status: "success",
         profile: newProfile,
@@ -120,7 +122,7 @@ update:async(req,res)=>{
       //   profile.status = 'in review';
       //   await profile.create();
       // }
-      console.log(profile);
+    
       res.status(200).json({
         status: "success",
         profile: profile,
