@@ -14,7 +14,7 @@ cloudinary.v2.config({
 const profileController = {
   create: async (req, res, next) => {
     try {
-      const { firstName, lastName, ...otherFields } = req.body;
+      const { firstName, lastName,user, ...otherFields } = req.body;
       if (
         !req.files ||
         !("resume" in req.files) ||
@@ -58,12 +58,13 @@ const profileController = {
         }
       );
       const newProfile = await Profile.create({
-        firstName,
-        lastName,
+        // firstName,
+        // lastName,
         resume: profileR.secure_url,
         nationalID: profileN.secure_url,
         certificate: profileC.secure_url,
         photo: profileP.secure_url,
+        user,
         ...otherFields,
       });
       res.status(200).json({
@@ -113,17 +114,19 @@ update:async(req,res)=>{
   viewProfileById: async (req, res) => {
     try {
 
-      const profile = await Profile.findOne(req.query.user);
-      if(profile){
-        profile.status = 'in review';
-
-        await profile.save();
-      }
+      const {id} = req.params
+      const profile = await Profile.findOne({user:id});
+      // if(profile){
+      //   profile.status = 'in review';
+      //   await profile.create();
+      // }
+      console.log(profile);
       res.status(200).json({
         status: "success",
         profile: profile,
       });
     } catch (error) {
+      console.log(error)
       res.status(500).json({
         status: "error",
         message: error.message,
