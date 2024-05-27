@@ -284,7 +284,7 @@ const swaggerDocumentation = {
             type: "string",
             description: "Category",
             required: true,
-            enum: ["Culnary Art", "Makeup Design", "Branding", "Plaint"],
+            enum: ["CulnaryArt", "MakeupDesign", "Braiding", "Paint"],
           },
           {
             in: "formData",
@@ -459,14 +459,14 @@ const swaggerDocumentation = {
         },
       },
     },
-    "/profile/viewProfileById": {
+    "/profile/viewProfileById/{id}": {
       get: {
         summary: "View profile by ID",
         tags: ["Profile"],
         security: [{ BearerAuth: [] }],
         parameters: [
           {
-            in: "query",
+            in: "path",
             name: "id",
             description: "ID of the profile to view",
             required: true,
