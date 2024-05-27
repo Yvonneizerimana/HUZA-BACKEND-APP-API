@@ -286,7 +286,13 @@ const swaggerDocumentation = {
             required: true,
             enum: ["Culnary Art", "Makeup Design", "Branding", "Plaint"],
           },
-          
+          {
+            in: "formData",
+            name: "user",
+            type: "string",
+            description: "id of a user",
+            
+          },
         ],
         responses: {
           200: {
@@ -443,6 +449,7 @@ const swaggerDocumentation = {
             required: true,
             enum: ["Culnary Art", "Makeup Design", "Brainding", "Plaint"],
           },
+         
           
         ],
         responses: {

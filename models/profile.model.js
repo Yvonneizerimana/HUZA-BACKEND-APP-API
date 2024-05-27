@@ -71,7 +71,7 @@ const profileSchema = new mongoose.Schema(
     },
     status:{
       type: String,
-      required: true,
+      required: false,
       default: "Pending",
     },
     user:{

@@ -14,10 +14,10 @@ import crypto from 'crypto'
 const allUsers={
 
     create: asyncWrapper(async (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return next(new BadRequestError(errors.array()[0].msg));
-        }
+        // const errors = validationResult(req);
+        // if (!errors.isEmpty()) {
+        //     return next(new BadRequestError(errors.array()[0].msg));
+        // }
         const foundUser = await allUsersModel.findOne({ email: req.body.email });
     if (foundUser) {
         return next(new BadRequestError("Email already in use"));
