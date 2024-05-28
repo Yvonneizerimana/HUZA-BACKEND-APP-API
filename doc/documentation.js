@@ -711,14 +711,14 @@ const swaggerDocumentation = {
         },
       },
     },
-    "/booking/delete": {
+    "/booking/delete/{id}": {
       delete: {
         summary: "Delete a booking",
         tags: ["Booking"],
         consumes: ["application/json"],
         parameters: [
           {
-            in: "query",
+            in: "path",
             name: "id",
             description: "ID of the booking to delete",
             required: true,

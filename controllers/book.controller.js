@@ -1,4 +1,5 @@
 import bookModel from "../models/book.model.js";
+import profile from '../models/profile.model.js';
 import dotenv from "dotenv";
 dotenv.config();
 import nodemailer from "nodemailer";
@@ -34,7 +35,7 @@ const bookController = {
       // Send booking details to the booking recipient
       const recipientMailOptions = {
         from: process.env.EMAIL_USER,
-        to: process.env.BOOKING_RECIPIENT_EMAIL,
+        to: profile.email,
         subject: "New Booking Received",
         text: `A new booking has been made. Here are the details:\nCustomer Email: ${email}\nDate: ${date}\nDetails: ${details}`,
       };
