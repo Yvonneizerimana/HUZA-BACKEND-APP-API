@@ -98,9 +98,23 @@ const profileController = {
 
 update:async(req,res)=>{
   try {
+    // const profileToUpdate = await Profile.findById(req.params.id);
+    // if (!profileToUpdate) {
+    //   return res.status(404).json({
+    //     status: "error",
+    //     message: "Profile not found",
+    //   });
+    // }
+    // profileToUpdate.firstName = req.body.firstName;
+
+    // const updatedProfile = await profileToUpdate.save();
+
+    // console.log(updatedProfile);
+
     const profile = await Profile.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
+    console.log(profile);
     res.status(200).json({
       status: "success",
       profile: profile,
