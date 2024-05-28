@@ -122,6 +122,10 @@ loginUser: async (req, res, next) => {
       res.status(401).json({ message: "Invalid username or password" });
       return;
     }
+    if(!user.verified===true){
+      res.status(401).json({ message: "Your account is not verfied" });
+      return;
+    }
 
    const validation=await bcrypt.compare(password, user.password);
    if(!validation){
