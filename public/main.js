@@ -1,49 +1,33 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import fetch from 'node-fetch';
+const form = document.getElementById("payForm");
 
-const app = express();
-const PORT =3000;
+form.addEventListener("submit", payNow);
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+function payNow(e) {
+    e.preventDefault();
 
-app.post('/verify-payment', async (req, res) => {
-    try {
-        // Extract transaction details from request body
-        const { tx_ref, otp } = req.body;
-
-        // Make a request to Flutterwave API to verify the OTP
-        const response = await fetch('https://api.flutterwave.com/v3/payments/verify_otp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer YOUR_FLUTTERWAVE_SECRET_KEY', // Replace with your Flutterwave secret key
-            },
-            body: JSON.stringify({
-                tx_ref: tx_ref,
-                otp: otp,
-            }),
-        });
-
-        const data = await response.json();
-
-        // Handle Flutterwave API response
-        if (response.ok) {
-            
-            res.status(200).json({ success: true, message: 'Payment successful!' });
-        } else {
-            // OTP verification failed
-            // You can return an appropriate error response
-            res.status(400).json({ success: false, message: data.message });
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        // Handle any server-side errors
-        res.status(500).json({ success: false, message: 'Internal server error' });
-    }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+    // Initialize Flutterwave Checkout
+    FlutterwaveCheckout({
+        public_key: "FLWPUBK_TEST-3efe7f0f39073f301996e89334245d26-X",
+        tx_ref: "ak_" + Math.floor((Math.random() * 100000000) + 1),
+        amount: document.getElementById("amount").value,
+        currency: "RWF",
+        customer: {
+            email: document.getElementById("email").value,
+            phoneNumber: document.getElementById("phoneNumber").value,
+            name: document.getElementById("fullName").value
+        },
+        callback: function (data) {
+            console.log(data);
+            // You can handle successful payment here
+        },
+        onclose: function () {
+            console.log('Payment modal closed');
+            // You can handle modal close event here
+        },
+        customizations: {
+            title: "Your Payment Title",
+            description: "Your Payment Description",
+            logo: "URL_to_your_logo",
+        },
+    });
+}

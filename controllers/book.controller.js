@@ -26,7 +26,7 @@ const bookController = {
       // Send confirmation email to customer
       const customerMailOptions = {
         from: email ,
-        to: email,
+        to: req.body.email,
         subject: "Booking Confirmation",
         text: `Thank you for your booking. Here are your details:\nDate: ${date}\nDetails: ${details}`,
       };
