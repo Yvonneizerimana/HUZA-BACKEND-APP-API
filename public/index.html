@@ -43,11 +43,16 @@
             customer: {
                 email: document.getElementById("email").value,
                 phoneNumber: document.getElementById("phoneNumber").value,
-                name: document.getElementById("fullName").valuehttps://github.com/mbienaimee/E-Daz.git
+                name: document.getElementById("fullName").value
             },
             callback: function (data) {
                 console.log(data);
-                // You can handle successful payment here
+                // This function is called after successful payment
+                // You can handle further processing here, including OTP verification if necessary
+                // Send the transaction details (data) to your server for further processing
+                // Your server will handle OTP verification and any additional processing
+                // Based on the server's response, you can show appropriate messages or redirect the user
+                // Example: window.location.href = "success_page.html";
             },
             onclose: function () {
                 console.log('Payment modal closed');
@@ -58,19 +63,6 @@
                 description: "Your Payment Description",
                 logo: "URL_to_your_logo",
             },
-        });
-
-        // Listen for OTP validation event
-        window.addEventListener('flutterwave:payment-success', function (event) {
-            // This event is triggered after payment success and OTP validation
-            console.log('Payment successful!');
-            console.log('OTP: ' + event.data.data.flwMeta.otp);
-            // You can handle further processing here
-        });
-
-        window.addEventListener('flutterwave:close', function () {
-            console.log('Payment modal closed');
-            // You can handle modal close event here
         });
     }
 </script>
