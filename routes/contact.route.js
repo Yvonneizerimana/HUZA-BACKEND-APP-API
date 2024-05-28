@@ -8,6 +8,6 @@ routerContact.post('/createContact', contactController.create);
 routerContact.get('/listContact',contactController.listContact);
 routerContact.get('/listContactByEmail',contactController.listContactByEmail);
 routerContact.get('/createContactByPhone',contactController.listContactByPhoneNumber);
-routerContact.get('/cdeleteContactById',contactController.deleteContactById);
+routerContact.delete('/deleteContactById',contactController.deleteContactById);
 
 export default routerContact;
