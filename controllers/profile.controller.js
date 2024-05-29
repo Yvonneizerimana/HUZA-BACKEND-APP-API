@@ -133,7 +133,7 @@ update:async(req,res)=>{
 
       const {id} = req.params
       const profile = await Profile.findOne({user:id});
-      if(profile){
+      if(profile && profile.status === "Pending"){
         profile.status = 'in review';
         await profile.save();
       }
