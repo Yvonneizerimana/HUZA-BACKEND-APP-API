@@ -1,4 +1,5 @@
 import Profile from "../models/profile.model.js";
+import allUsers from "../models/allUsers.model.js";
 
 import sgMail from "@sendgrid/mail";
 import cloudinary from "cloudinary";
@@ -132,10 +133,10 @@ update:async(req,res)=>{
 
       const {id} = req.params
       const profile = await Profile.findOne({user:id});
-      // if(profile){
-      //   profile.status = 'in review';
-      //   await profile.create();
-      // }
+      if(profile){
+        profile.status = 'in review';
+        await profile.save();
+      }
     
       res.status(200).json({
         status: "success",
