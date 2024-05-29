@@ -447,6 +447,7 @@ const swaggerDocumentation = {
             type: "string",
             description: "Category",
             required: true,
+            enum: ["CalinaryArt", "MakeupDesign", "Braiding", "Paint"],
             
           },
          
@@ -828,6 +829,7 @@ const swaggerDocumentation = {
             type: "string",
             description: "Category",
             required: false,
+            enum: ["CalinaryArt", "MakeupDesign", "Braiding", "Paint"],
           },
           {
             in: "formData",
