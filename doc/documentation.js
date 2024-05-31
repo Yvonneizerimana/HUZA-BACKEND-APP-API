@@ -25,6 +25,8 @@ const swaggerDocumentation = {
     { name: "Profile", description: "Profile API" },
     { name: "Contact", description: "Contact API" },
     { name: "Booking", description: "Booking API" },
+    { name: "Payment", description: "payment API" },
+   
   ],
   paths: {
     "/allUsers/create": {
@@ -880,6 +882,92 @@ const swaggerDocumentation = {
           },
         },
       },
+    },
+    "/payment/mobileMoney": { // Added mobileMoney route
+      get: {
+        summary: "Get mobile money payment details",
+        description: "Retrieves information about mobile money payments.",
+        tags: ["Mobile Money"],
+        parameters: [
+          {
+            name: "names",
+            in: "query",
+            description: "The name associated with the mobile money payment.",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "email",
+            in: "query",
+            description: "The email associated with the mobile money payment.",
+            required: false,
+            type: "string",
+            format: "email",
+          },
+          {
+            name: "phone",
+            in: "query",
+            description: "The phone number associated with the mobile money payment.",
+            required: false,
+            type: "string"
+            
+          },
+        ],
+        responses: {
+          200: {
+            description: "Successful operation. Returns mobile money payment details."
+          },
+          400: {
+            description: "Bad request. Something went wrong with the request."
+          },
+          500: {
+            description: "Internal server error. Something went wrong on the server side."
+          }
+        }
+      }
+    },
+    "/payment/mobile": { // Added mobileMoney route
+      get: {
+        summary: "Get mobile money payment details",
+        description: "Retrieves information about mobile money payments.",
+        tags: ["Mobile Money"],
+        parameters: [
+          {
+            name: "names",
+            in: "query",
+            description: "The name associated with the mobile money payment.",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "email",
+            in: "query",
+            description: "The email associated with the mobile money payment.",
+            required: false,
+            type: "string",
+            format: "email",
+          },
+          {
+            name: "phone",
+            in: "query",
+            description: "The phone number associated with the mobile money payment.",
+            required: false,
+            type: "string"
+            
+          },
+        ],
+        responses: {
+          200: {
+            description: "Successful operation. Returns mobile money payment details."
+          },
+          400: {
+            description: "Bad request. Something went wrong with the request."
+          },
+          500: {
+            description: "Internal server error. Something went wrong on the server side."
+          }
+        }
+      }
     },
     
   },
