@@ -691,6 +691,18 @@ const swaggerDocumentation = {
         },
       },
     },
+    "/profile/category-analytics": { // Added route for category-analytics
+      get: {
+        summary: "Get category analytics",
+        tags: ["Profile"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: {
+            description: "Category analytics retrieved successfully",
+          },
+        },
+      },
+    },
     "/booking/createBook": {
       post: {
         summary: "Create a new book",
