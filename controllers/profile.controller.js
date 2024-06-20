@@ -255,6 +255,28 @@ viewProfileByStatus:async(req, res)=>{
       message: error.message,
     });
   }
+},
+categoryAnalytics: async (req, res) => {
+  try {
+    const analytics = await Profile.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    res.status(200).json({
+      status: "success",
+      analytics: analytics
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
 }
 };
 export default profileController;
