@@ -35,8 +35,8 @@ Before running the server locally, make sure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone <https://github.com/Yvonneizerimana/HUZA-BACKEND-APP-API.git>
+   cd <HUZA-BACKEND-APP-API>
 
 ## install dependences
 
